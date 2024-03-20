@@ -2,9 +2,9 @@ Just for fun and to get a better understanding about how CPUs work, I started to
 
 These solutions should compile and run as-is in FreeBSD 64bit using the following commands:
 
-`nasm -f elf64 <filename>.asm`
+`nasm -f elf64 <filename.asm>`
 
-`gcc <filename>.o -o <filename>`
+`gcc <filename.o> -o <filename>`
 
 For debugging with gdb, you should replace the first command with:
 
