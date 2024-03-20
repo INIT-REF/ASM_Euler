@@ -10,6 +10,10 @@ For debugging with gdb, you should replace the first command with:
 
 `nasm -f elf64 -g -F dwarf <filename>.asm`
 
+For Linux, you should be ok by replacing the `1` in the exit syscall with `60` and adding a `-no-pie` option to the gcc command.
+
+
+
 ## Some comments about specific solutions:
 
 ### 001
