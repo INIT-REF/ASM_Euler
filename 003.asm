@@ -10,7 +10,7 @@ main:
     mov     rbx, 600851475143   ;the number to factor
     mov     rcx, 2              ;initialize rcx for trial divisions
     test    rbx, 1              ;check if number is even
-    jz      divide2             ;if it is, jump to divide2
+    jnz     odd                 ;if not, jump to odd
 
 divide2:
     mov     rax, rbx    ;put current number in rax as the dividend
