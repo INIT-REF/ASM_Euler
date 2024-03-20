@@ -1,0 +1,38 @@
+section .data
+    msg db "%d", 10, 0              ;return string for printf (just the result)
+    steps dd 3, 2, 1, 3, 1, 2, 3    ;how the multiples of 3 and 5 are spaced
+
+section .text
+extern printf
+global main
+
+main:
+    xor     eax, eax        ;result
+    xor     ebx, ebx        ;current number
+    xor     ecx, ecx        ;array index
+
+arr0:
+    cmp     ecx, 7          ;check if we reached the end of the array
+    jl      countup         ;if not, continue counting
+    xor     ecx, ecx        ;else reset counter
+
+countup:
+    add     eax, ebx                ;add current number to result
+    add     ebx, [steps + ecx * 4]  ;add steps@ecx to current number
+    inc     ecx                     ;increase the array index 
+    cmp     ebx, 1000               ;check if we reached 1000
+    jl      arr0                    ;if not, continue
+
+print:                      ;printing routine, differs slightly from OS to OS
+    push    rbp
+    mov     edi, msg
+    mov     esi, eax
+    call    printf
+    pop     rbp
+
+exit:                       ;exit routine, dito
+    mov     eax, 1
+    xor     edi, edi
+    syscall
+
+section .note.GNU-stack     ;just for gcc
