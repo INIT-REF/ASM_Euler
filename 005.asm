@@ -7,7 +7,7 @@ global main
 
 main:
     mov     eax, 1      ;put 1 in eax
-    mov     ebx, 1      ;put 2 in ebx, will be increased in the nest step
+    mov     ebx, 1      ;put 1 in ebx, will be increased in the nest step
 
 next:
     inc     ebx         ;increase eax to compule GCD/LCM with next number
