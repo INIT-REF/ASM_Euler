@@ -21,3 +21,6 @@ I made use of the fact that the multiples of 3 or 5 are spaced at a repeating pa
 
 ### 003
 I made the solution more universal than it needs to be, because the number to factor is odd. You could omit the whole "dividing by 2" part and still arrive at the correct solution. I am not totally sure that it works for any input number, but at least the corner cases that I checked (powers of 2, primes, numbers with just 2 and another prime as factors) worked. If you find a case which shows a wrong result or leads to an infinite loop, please let me know!
+
+### 004
+The Palindrome check works by reversing the current product. I continuously divide the product by 10 and add the remainder to the reverse. Then the reverse is multiplied by 10 to "make room" for the next remainder.
