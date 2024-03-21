@@ -1,6 +1,5 @@
 section .data
     msg db "%d", 10, 0  ;return string for printf (just the result)
-    tmp dd 0            ;temporary storage for products
     max dd 0            ;variable to store current maximum
 
 section .text
@@ -21,14 +20,14 @@ reset:
 nextproduct:
     mov     eax, edi    ;put multipicand in eax
     mul     esi         ;multiply by multiplier
-    mov     [tmp], eax  ;store product in tmp
+    push    rax         ;push product on the stack
     inc     esi         ;increase the multiplier
     cmp     esi, 1000   ;check if the multiplier reached 1000
     je      reset       ;if yes, go to reset
     xor     ebx, ebx    ;prepare ebx which will store the reverse
    
 ispalindrome:
-    push    rax             ;push current product on the stack
+    push    rax             ;push current (partial) product on the stack
     mov     eax, ebx        ;put current (partial) reverse in eax
     mul     ecx             ;multiply that by 10
     mov     ebx, eax        ;move result back in ebx
@@ -38,7 +37,8 @@ ispalindrome:
     add     ebx, edx        ;add remainder to ebx
     test    eax, eax        ;check if product was reduced to zero
     jnz     ispalindrome    ;if not, continue reveral process
-    cmp     ebx, [tmp]      ;else check if reverse = product
+    pop     rax             ;else get original product back from the stack
+    cmp     ebx, eax        ;check if reverse = product
     jne     nextproduct     ;if not, continue with the next product
     cmp     ebx, [max]      ;if yes, check if it is greater than current max
     jle     nextproduct     ;if lower, continue with next product
