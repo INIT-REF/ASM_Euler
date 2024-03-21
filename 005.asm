@@ -40,7 +40,7 @@ lcm:
     div     ebx         ;divide by gcd
     pop     rbx         ;get original number 2 from the stack
     mul     ebx         ;multiply
-    cmp     ebx, 20     ;check if ebx is still below 20 
+    cmp     ebx, 20     ;check if ebx is still <= 20 
     jle     next        ;if it is, continue with next number
 
 print:                  ;printing routine, differs slightly from OS to OS
