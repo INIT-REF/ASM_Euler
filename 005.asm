@@ -35,11 +35,12 @@ gcd:
     mov     eax, ebx    ;if not, replace eax with ebx (as eax was zero)
 
 lcm:
-    mov     edi, eax    ;put gcd in edi for later usage
+    mov     ebx, eax    ;put gcd in ecx for later usage
     pop     rax         ;get original numbers from the stack
+    mul     ebx
     pop     rbx
-    mul     ebx         ;get product of numbers
-    div     edi         ;divide by the gcd
+    ;mul     ebx         ;get product of numbers
+    div     ecx         ;divide by the gcd
     cmp     ebx, 20     ;check if ebx is still below 20 
     jle     next        ;if it is, continue with next number
 
