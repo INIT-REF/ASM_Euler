@@ -7,8 +7,8 @@ section .text
     global main
 
 main:
-    mov     byte [primes], 0       ;set primes[0] = 0
-    mov     byte [primes + 1], 0   ;set primes[1] = 0
+    mov     byte [primes], 0        ;set primes[0] = 0
+    mov     byte [primes + 1], 0    ;set primes[1] = 0
     mov     ebx, 1                  ;array indexer for outer loop
 
 sieve_outer:
@@ -29,7 +29,7 @@ sieve_inner:
     jl      sieve_inner             ;if it is, continue with inner loop
     jmp     sieve_outer             ;if not, continue with outer loop
 
-reset:                  ;reset registers for next operation
+reset:                              ;reset registers for next operation
     xor     ebx, ebx
     xor     ecx, ecx
 
@@ -41,14 +41,14 @@ find10001st:
     cmp     ecx, 10001              ;check if counter arrived at 10001
     jl      find10001st             ;if not, continue
     
-print:                  ;printing routine, differs slightly from OS to OS
+print:                              ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
     mov     esi, ebx
     call    printf
     pop     rbp
 
-exit:                   ;exit routine, dito
+exit:                               ;exit routine, dito
     mov     eax, 1
     xor     edi, edi
     syscall
