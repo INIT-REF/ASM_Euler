@@ -2,8 +2,8 @@ section .data
     msg db "%d", 10, 0  ;return string for printf (just the result)
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     mov     edi, 1      ;counter
