@@ -62,17 +62,3 @@ exit:                       ;exit routine, dito
     syscall
 
 section .note.GNU-stack     ;just for gcc
-
-;while (!finished) {
-;        d = r * r / 2;
-;        
-;        for (int i = 1; i * i < d; i++) {
-;            if (d % i == 0 && 1000 == (3 * r) + (2 * i) + (2 * d / i)) {
-;                finished = 1;
-;                p = (r + i) * (r + (d / i)) * (r + i + (d / i));
-;            }
-;        }
-;
-;        r += 2;
-;    }
-
