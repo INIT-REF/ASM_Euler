@@ -26,4 +26,4 @@ I made the solution more universal than it needs to be, because the number to fa
 The Palindrome check works by reversing the current product. I continuously divide the product by 10 and add the remainder to the reverse. Then the reverse is multiplied by 10 to "make room" for the next remainder.
 
 ### 007
-The upper bound for the prime sieve can be found with the fact that the Nth prime number is guaranteed to be less that N * (ln N + ln(ln N))
+The upper bound for the prime sieve can be found with the fact that the Nth prime number is guaranteed to be less that N * (ln N + ln(ln N)).
