@@ -1,8 +1,5 @@
 section .data
     msg db "%d", 10, 0              ;return string for printf (just the result)
-    a dd 0
-    b dd 0
-    c dd 0
 
 section .text
     extern printf
