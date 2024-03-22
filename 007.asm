@@ -23,7 +23,7 @@ sieve_outer:
     mul     ebx                     ;begin with square of outer index
 
 sieve_inner:
-    mov     byte [primes + eax], 0 ;set multiple to not prime
+    mov     byte [primes + eax], 0  ;set multiple to not prime
     add     eax, ebx                ;next multiple
     cmp     eax, 115000             ;check if square is <= limit
     jl      sieve_inner             ;if it is, continue with inner loop
