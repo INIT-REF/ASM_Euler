@@ -27,3 +27,6 @@ The Palindrome check works by reversing the current product. I continuously divi
 
 ### 007
 The upper bound for the prime sieve can be found with the fact that the Nth prime number is guaranteed to be less that N * (ln N + ln(ln N)).
+
+### 009
+The solution is based on [Dickson's method](https://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples#Dickson's_method) for generating pythagorean triplets.
