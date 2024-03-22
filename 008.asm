@@ -50,7 +50,7 @@ product:
     cmp     edi, 12                 ;check if is <= 12
     jle     product                 ;if yes, continue multiplying
     inc     ebx                     ;else increase index of outer loop
-    cmp     ebx, 990                ;check if we reached the end of the list
+    cmp     ebx, 986                ;check if we reached the end of the list
     jle     updatemax               ;if not, go to updatemax and continue
 
 print:                      ;printing routine, differs slightly from OS to OS
