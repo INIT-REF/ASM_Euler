@@ -30,3 +30,6 @@ The upper bound for the prime sieve can be found with the fact that the Nth prim
 
 ### 009
 The solution is based on [Dickson's method](https://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples#Dickson's_method) for generating pythagorean triplets.
+
+### 011
+The grid is surrounded by 0s on three sides. This simplifies the algorithm, because we can check every direction at each index and "invalid products" which would go beyond the edges will become 0.
