@@ -9,17 +9,17 @@ section .text
 main:
     mov     byte [primes], 0        ;set primes[0] = 0
     mov     byte [primes + 1], 0    ;set primes[1] = 0
-    mov     ebx, 1                  ;array indexer for outer loop
+    mov     ebx, 1                  ;array index for outer loop
 
 sieve_outer:
     inc     ebx                     ;increase index
-    mov     eax, ebx                ;copy to eyx for squaring
+    mov     eax, ebx                ;copy to eax for squaring
     mul     ebx                     ;square
     cmp     eax, 2000000            ;check if square is > limit    
     jg      reset                   ;if it is, jump to reset
-    cmp     byte [primes + ebx], 0  ;check if primes[edi] = 1
-    je      sieve_outer             ;if yes, continue
-    mov     eax, ebx                ;array indexer for inner loop
+    cmp     byte [primes + ebx], 0  ;check if ebx is not prime
+    je      sieve_outer             ;if not prime, try next number
+    mov     eax, ebx                ;array index for inner loop
     mul     ebx                     ;begin with square of outer index
 
 sieve_inner:
@@ -30,7 +30,7 @@ sieve_inner:
     jmp     sieve_outer             ;if not, continue with outer loop
 
 reset:
-    xor     rbx, rbx                ;reset ebx and eax for building the sum
+    xor     rbx, rbx                ;reset rax and rbx for building the sum
     xor     rax, rax
 
 sum:
@@ -42,16 +42,16 @@ sum:
     add     rax, rbx                ;if yes, add prime to sum
     jmp     sum                     ;back to sum
     
-print:                              ;printing routine, differs slightly from OS to OS
+print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
     mov     rsi, rax
     call    printf
     pop     rbp
 
-exit:                               ;exit routine, dito
+exit:                   ;exit routine, dito
     mov     eax, 1
     xor     edi, edi
     syscall
 
-section .note.GNU-stack     ;just for gcc
+section .note.GNU-stack ;just for gcc
