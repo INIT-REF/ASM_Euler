@@ -15,9 +15,9 @@ calc:
     mov     eax, edi    ;put current number in eax
     mul     edi         ;square it
     add     ecx, eax    ;add result to sum of squares
-    inc     edi         ;increase counter
+    inc     edi         ;increase number
     cmp     edi, 100    ;check if we reached 100
-    jle     calc        ;if <= 100, continue
+    jle     calc        ;if not, continue loop
     mov     eax, ebx    ;else put sum in eax
     mul     ebx         ;square the sum
     sub     eax, ecx    ;subtract sum of squares
