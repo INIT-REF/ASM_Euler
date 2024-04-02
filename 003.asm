@@ -1,16 +1,15 @@
-
 section .data
     msg db "%d", 10, 0        ;return string for printf (just the result)
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     mov     rbx, 600851475143   ;the number to factor
     mov     rcx, 2              ;initialize rcx for trial divisions
-    test    rbx, 1              ;check if number is even
-    jnz     odd                 ;if not, jump to odd
+    test    rbx, 1              ;check if number is odd
+    jnz     odd                 ;if it is, jump to odd
 
 divide2:
     mov     rax, rbx    ;put current number in rax as the dividend
@@ -47,7 +46,6 @@ divide:
 switch:
     mov     rcx, rbx    ;else print the dividend
 
-
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     rdi, msg
@@ -55,7 +53,7 @@ print:                  ;printing routine, differs slightly from OS to OS
     call    printf
     pop     rbp
 
-exit:                       ;exit routine, dito
+exit:                   ;exit routine, dito
     mov     rax, 1
     xor     rdi, rdi
     syscall

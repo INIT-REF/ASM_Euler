@@ -3,8 +3,8 @@ section .data
     steps dd 3, 2, 1, 3, 1, 2, 3    ;how the multiples of 3 and 5 are spaced
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     xor     eax, eax        ;result
@@ -14,7 +14,7 @@ main:
 arr0:
     cmp     ecx, 7          ;check if we reached the end of the array
     jl      countup         ;if not, continue counting
-    xor     ecx, ecx        ;else reset counter
+    xor     ecx, ecx        ;else reset index
 
 countup:
     add     eax, ebx                ;add current number to result

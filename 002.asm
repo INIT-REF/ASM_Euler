@@ -2,8 +2,8 @@ section .data
     msg db "%d", 10, 0              ;return string for printf (just the result)
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     xor     eax, eax    ;result
@@ -11,14 +11,14 @@ main:
     mov     ecx, 2      ;fib (n)
 
 fib:
-    test    ecx, 1      ;check if last bit is 1 (number is odd)
-    jnz     odd         ;if odd, jump to odd
+    test    ecx, 1      ;check if number is odd
+    jnz     odd         ;if it is, jump to odd
     add     eax, ecx    ;if even, add to result
 
 odd:
     xadd    ecx, ebx        ;exchange ebx and ecx, put the sum in ecx
     cmp     ecx, 4000000    ;check if we are still under 4 million
-    jl      fib             ;if yes, continue
+    jl      fib             ;if yes, back to fib
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp

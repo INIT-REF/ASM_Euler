@@ -3,8 +3,8 @@ section .data
     max dd 0            ;variable to store current maximum
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     mov     ecx, 10     ;10 in eax for computing the reverse later
