@@ -1,6 +1,6 @@
 section .data
     msg db "%lld", 10, 0    ;return string for printf (just the result)
-    max dq 0                ;variable to store the current max
+    
     list    db "73167176531330624919225119674426574742355349194934"
             db "96983520312774506326239578318016984801869478851843"
             db "85861560789112949495459501737958331952853208805511"
@@ -29,20 +29,21 @@ section .text
 main:
     xor     ebx, ebx    ;prepare ebx, counter for outer loop
     xor     rax, rax    ;prepare rax, will store the current product
+    xor     r8, r8      ;prepare r8, will store the current max
 
 updatemax:
-    cmp     rax, [max]              ;check if current product is greater than max
+    cmp     rax, r8                 ;check if current product > max
     jle     next                    ;if not, continue with next product
-    mov     [max], rax              ;if yes, store product in max
+    mov     r8, rax                 ;if yes, store product in max
 
 next:
-    xor     rax, rax                ;prepare rax again for the next product
+    xor     rax, rax                ;prepare rax for next product
     mov     al, [list + ebx]        ;store char at current position in al
     sub     rax, '0'                ;subtract '0' which give the int value
-    mov     edi, 1                  ;put 1 in edi (starting index for inner loop)
+    mov     edi, 1                  ;put 1 in edi (index for inner loop)
 
 product:
-    xor     rcx, rcx                ;prepare rcx, which will store the current digit
+    xor     rcx, rcx                ;prepare rcx, the current digit
     mov     cl, [list + ebx + edi]  ;put digit @ ebx + edi in cl
     sub     rcx, '0'                ;subtract '0' to get the int value
     mul     rcx                     ;multiply
@@ -56,7 +57,7 @@ product:
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     rsi, [max]
+    mov     rsi, r8
     call    printf
     pop     rbp
 
