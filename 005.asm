@@ -1,16 +1,16 @@
 section .data
-    msg db "%d", 10, 0              ;return string for printf (just the result)
+    msg db "%d", 10, 0  ;return string for printf (just the result)
 
 section .text
-extern printf
-global main
+    extern printf
+    global main
 
 main:
     mov     eax, 1      ;put 1 in eax
     mov     ebx, 1      ;put 1 in ebx, will be increased in the nest step
 
 next:
-    inc     ebx         ;increase eax to compule GCD/LCM with next number
+    inc     ebx         ;increase eax to compute GCD/LCM with next number
     push    rbx         ;push both numbers on the stack for LCM later
     push    rax
 
@@ -20,7 +20,7 @@ gcd_start:
     xchg    ebx, eax    ;if not, exchange both numbers
     
 gcd_mod:
-    test    eax, eax    ;check if eax or ebx are 0 and go to gcd if one of them is
+    test    eax, eax    ;if eax or ebx are 0, go to gcd
     jz      gcd
     test    ebx, ebx
     jz      gcd
@@ -30,12 +30,11 @@ gcd_mod:
     jmp     gcd_start   ;back to the start with the new numbers
 
 gcd:
-    test    ebx, ebx    ;check if ebx is zero
+    test    eax, eax    ;check if eax is zero
     jz      lcm         ;if it is, go directly to lcm
-    mov     eax, ebx    ;if not, replace eax with ebx (as eax was zero)
+    mov     ebx, eax    ;if not, replace ebx with eax (as ebx was zero)
 
 lcm:
-    mov     ebx, eax    ;put gcd in ebx for division
     pop     rax         ;get original number 1 from the stack
     div     ebx         ;divide by gcd
     pop     rbx         ;get original number 2 from the stack

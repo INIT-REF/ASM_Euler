@@ -1,12 +1,12 @@
 section .data
     msg db "%d", 10, 0  ;return string for printf (just the result)
-    max dd 0            ;variable to store current maximum
 
 section .text
     extern printf
     global main
 
 main:
+    xor     r8, r8      ;prepare r8 which will hold the current max
     mov     ecx, 10     ;10 in eax for computing the reverse later
     mov     edi, 99     ;starting number for building the products
                         ;will be increased to 100 in the next step
@@ -15,7 +15,7 @@ reset:
     inc     edi         ;increase multiplicand
     cmp     edi, 1000   ;check the multiplicand reached 1000
     je      print       ;if yes, print the result
-    mov     esi, edi    ;put multiplicand in multiplier
+    mov     esi, edi    ;copy multiplicand in multiplier
 
 nextproduct:
     mov     eax, edi    ;put multipicand in eax
@@ -40,15 +40,15 @@ ispalindrome:
     pop     rax             ;else get original product back from the stack
     cmp     ebx, eax        ;check if reverse = product
     jne     nextproduct     ;if not, continue with the next product
-    cmp     ebx, [max]      ;if yes, check if it is greater than current max
+    cmp     ebx, r8d        ;if yes, check if it is greater than current max
     jle     nextproduct     ;if lower, continue with next product
-    mov     [max], ebx      ;if greater, put it in max
+    mov     r8d, ebx        ;if greater, put it in max
     jmp     nextproduct     ;and continue with next product
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, [max]
+    mov     esi, r8d
     call    printf
     pop     rbp
 
