@@ -26,8 +26,8 @@ multiply:
     mov     ebx, eax                    ;carry = result
     mov     dword [num + 4 * edi], edx  ;digit @ edi = remainder
     dec     edi                         ;decrease index
-    cmp     edi, 0                    ;check if index = 0
-    jge     multiply                    ;if not, repeat
+    cmp     edi, 0                      ;check if index >= 0
+    jge     multiply                    ;if yes, repeat
     test    esi, esi                    ;check if completed
     jnz     power                       ;if not, jump to power
     xor     eax, eax                    ;else reset eax and ebx
