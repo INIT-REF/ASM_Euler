@@ -36,3 +36,6 @@ The grid is surrounded by 0s on three sides. This simplifies the algorithm, beca
 
 ### 013
 It is sufficient to truncate the numbers to the first 11 digits to get the result. I convert the result to a string and let printf output the first 10 characters.
+
+### 015
+This boils down to an "n choose k" problem, with n being twice the grid width and k being the width, so "40 choose 20". We can then use the [Muliplicative Formula](https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula) to compute the result without needing to calculate factorials.
