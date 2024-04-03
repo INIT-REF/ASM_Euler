@@ -35,4 +35,4 @@ The solution is based on [Dickson's method](https://en.wikipedia.org/wiki/Formul
 The grid is surrounded by 0s on three sides. This simplifies the algorithm, because we can check every direction at each index and "invalid products" which would go beyond the edges will become 0.
 
 ### 013
-It is sufficient to truncate the numbers to the first 12 digits to get the result. I convert the result to a string and let printf output the first 10 characters.
+It is sufficient to truncate the numbers to the first 11 digits to get the result. I convert the result to a string and let printf output the first 10 characters.
