@@ -1,5 +1,5 @@
 section .data
-    msg db "%d", 10, 0        ;return string for printf (just the result)
+    msg db "%d", 10, 0  ;return string for printf (just the result)
 
 section .text
     extern printf
