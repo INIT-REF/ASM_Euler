@@ -10,10 +10,10 @@ main:
     mov     rbx, 1      ;loop counter
 
 paths:
-    mov     rcx, rbx    ;copy counter to rcx
-    add     rcx, 20     ;add 20
-    mul     rcx         ;multiply rax * rcx
-    div     rbx         ;divide by counter
+    mov     rcx, 41     ;put 41 in rcx (n + 1)
+    sub     rcx, rbx    ;subtract rbx (n + 1 - i)
+    mul     rcx         ;multiply
+    div     rbx         ;divide (/i)
     inc     rbx         ;increase counter
     cmp     rbx, 20     ;check if counter is <= 20
     jle     paths       ;if yes, repeat
