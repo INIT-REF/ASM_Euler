@@ -44,14 +44,14 @@ sum:
     mov     ecx, 10                     ;set ecx to 10 for divisions
 
 convert:
-    xor     rdx, rdx                    ;reset remainder
-    div     rcx                         ;divide by 10
-    add     rdx, '0'                    ;get the ASCII value of the remainder
-    mov     byte [ans + ebx], dl        ;put it in ans
-    dec     ebx                         ;decrease index
-    test    eax, eax                    ;check if number has arrived at 0
-    jnz     convert                     ;if not, repeat
-    lea     eax, [ans + ebx + 1]        ;else pointer to first digit in eax
+    xor     rdx, rdx                ;reset remainder
+    div     rcx                     ;divide by 10
+    add     rdx, '0'                ;get the ASCII value of the remainder
+    mov     [ans + ebx], dl         ;put it in ans
+    dec     ebx                     ;decrease index
+    test    rax, rax                ;check if number has arrived at 0
+    jnz     convert                 ;if not, repeat
+    lea     eax, [ans + ebx + 1]    ;else pointer to first digit in eax
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
