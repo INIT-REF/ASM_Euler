@@ -10,11 +10,11 @@ main:
     xor     ebx, ebx                    ;carry
     mov     edi, 302                    ;array index
     mov     ecx, 10                     ;for divisions
-    mov     r8d, 1000                   ;power counter
+    mov     esi, 1000                   ;power counter
     mov     dword [num + 4 * edi], 1    ;initial state
 
 power:
-    dec     r8d                         ;decrease counter
+    dec     esi                         ;decrease counter
     mov     edi, 302                    ;reset index
 
 multiply:
@@ -28,7 +28,7 @@ multiply:
     dec     edi                         ;decrease index
     test    edi, edi                    ;check if index = 0
     jnz     multiply                    ;if not, repeat
-    test    r8d, r8d                    ;check if completed
+    test    esi, esi                    ;check if completed
     jnz     power                       ;if not, jump to power
     xor     eax, eax                    ;else reset eax and ebx
     xor     ebx, ebx
