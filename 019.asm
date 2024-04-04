@@ -25,7 +25,7 @@ setfeb:
     mov     eax, ebx            ;year in eax
     div     r8d                 ;divide by 4
     test    edx, edx            ;check remainder
-    jnz     count               ;if not zero go to noleap
+    jnz     count               ;if not zero go to count
     mov     dword [dim + 8], 29 ;if zero, set febuary to 29 days
 
 count:
