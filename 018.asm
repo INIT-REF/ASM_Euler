@@ -21,15 +21,9 @@ section .text
     global main
 
 main:
-    mov     eax, 135                ;init eax -> index of first number in
-                                    ;last row + 2 * length of triangle
-    mov     esi, 15                 ;end of row indicator
-
-reset:
-    xor     edi, edi                ;reset column index
-    sub     eax, esi                ;go to previous row
-    sub     eax, esi                ;go to first of row
-    dec     esi                     ;decrease end of row indicator
+    mov     eax, 105                ;index of first number in last row
+    xor     edi, edi                ;column counter
+    mov     esi, 14                 ;end of row indicator
 
 pathsum:
     mov     ebx, [tri + 4 * eax]    ;tri @ index in ebx
@@ -49,8 +43,14 @@ sum:
     inc     eax
     inc     edi                     ;increase column index
     cmp     edi, esi                ;check if end of row is reached
-    je      reset                   ;if yes, jump to reset
-    jmp     pathsum                 ;else continue in row
+    jl      pathsum                 ;if not, continue
+
+reset:
+    xor     edi, edi                ;reset column index
+    sub     eax, esi                ;go to previous row
+    sub     eax, esi                ;go to first of row
+    dec     esi                     ;decrease end of row indicator
+    jmp     pathsum                 ;back to pathsum
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
