@@ -45,3 +45,6 @@ I use an array representation of the number and compute each power digit by digi
 
 ### 017
 I left that one more or less uncommented. It's just what can be done with pen and paper or a calculator and builds the sum in loops according to how many times a number is used below 1000.
+
+### 020
+Pretty much the same solution as 016, just with an increasing multiplier instead of the constant factor.
