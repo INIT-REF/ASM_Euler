@@ -31,7 +31,7 @@ pathsum:
     mov     ecx, [tri + 4 * eax]    ;tri @ next index in ecx
     dec     eax                     ;reset eax
     cmp     ebx, ecx                ;compare both numbers
-    jg      sum                     ;if ebx > ecx replace
+    jg      sum                     ;if ebx > ecx goto sum
     xchg    ebx, ecx                ;else exchange ebx and ecx
 
 sum:
