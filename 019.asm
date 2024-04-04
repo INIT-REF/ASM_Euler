@@ -13,7 +13,7 @@ main:
     mov     r8d, 4          ;for leap year divisions
     xor     r9d, r9d        ;sum
 
-resetmonth:
+nextyear:
     mov     ecx, 1              ;set month to January
     inc     ebx                 ;next year
     cmp     ebx, 2001           ;check if we are finished
@@ -52,7 +52,7 @@ nextmonth:
     mov     esi, 1                  ;else reset to first of month
     inc     ecx                     ;increase month
     cmp     ecx, 13                 ;end of year?
-    je      resetmonth              ;if yes, reset month
+    je      nextyear                ;if yes, next year
     ret
     
 back:
