@@ -14,7 +14,7 @@ findamicables:
     cmp     ecx, 10000      ;check if we are under 10000
     je      print           ;if not, print result
     call    divsum          ;calculate sum of divisors
-    cmp     ecx, r8d        ;check if sum = numer (i.e. a perfect number)
+    cmp     ecx, r8d        ;check if sum = number (i.e. a perfect number)
     je      findamicables   ;if yes, skip that
     push    rcx             ;put current number on the stack
     mov     ecx, r8d        ;put divsum in ebx
