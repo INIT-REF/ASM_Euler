@@ -42,3 +42,6 @@ This boils down to an "n choose k" problem, with n being twice the grid width an
 
 ### 016
 I use an array representation of the number and compute each power digit by digit.
+
+### 017
+I left that one more or less uncommented. It's just what can be done with pen and paper or a calculator and builds the sum in loops according to how many times a number is used below 1000.
