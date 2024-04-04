@@ -14,10 +14,8 @@ main:
     xor     r9d, r9d        ;sum
 
 resetmonth:
-    mov     ecx, 1          ;set month to January
-    inc     ebx             ;next year
-
-setfeb:
+    mov     ecx, 1              ;set month to January
+    inc     ebx                 ;next year
     cmp     ebx, 2001           ;check if we are finished
     je      print               ;if yes, print result
     mov     dword [dim + 8], 28 ;reset febuary
