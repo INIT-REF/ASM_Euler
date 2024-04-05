@@ -108,20 +108,20 @@ scores:
     inc     r8d
 
 convert:
-    cmp     byte [names + edi], 0
+    cmp     byte [names + edi], 0   ;skip conversion after end of name
     je      skip
-    sub     byte [names + edi], 64
+    sub     byte [names + edi], 64  ;subtract 64 from character for int value
 
 skip:
-    add     al, [names + edi]
-    inc     edi
-    inc     esi
-    cmp     esi, 20
-    jl      convert
-    mul     r8d
-    add     ecx, eax
-    cmp     edi, 103260
-    jl      scores    
+    add     al, [names + edi]       ;add int value to sum
+    inc     edi                     ;next character
+    inc     esi                     ;increase counter
+    cmp     esi, 20                 ;check if end of name
+    jl      convert                 ;if not, continue
+    mul     r8d                     ;multiply by index of name
+    add     ecx, eax                ;add score to total
+    cmp     edi, 103260             ;check if last name
+    jl      scores                  ;if not, continue
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
