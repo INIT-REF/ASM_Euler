@@ -3,7 +3,6 @@ section .data
     string db "0123456789"
     result db "0000000000", 0
     fac dd 362880, 40320, 5040, 720, 120, 24, 6, 2, 1, 1    ;9! ... 0!
-    taken dd 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1                ;flags for taken
    
 section .text
     extern printf
