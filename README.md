@@ -56,3 +56,5 @@ Because Bubble Sort was the easiest to implement, the solution is quite slow com
 
 Also, I'm sure I could have saved quite a lot of instructions and registers by using the stack effectively etc...
 
+### 024
+I used the an implementation of the [Lehmer code](https://en.wikipedia.org/wiki/Lehmer_code) to solve this. It has the advantage that you can directly compute the Nth permutation without needing to build the ones in between. The `updatestring` function shifts all digits from the current index one step to the left, so that the remaining digits form a "shorter" array where the already selected digits are missing.
