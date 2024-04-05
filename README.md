@@ -48,3 +48,11 @@ I left that one more or less uncommented. It's just what can be done with pen an
 
 ### 020
 Pretty much the same solution as 016, just with an increasing multiplier instead of the constant factor.
+
+### 022
+Although this is a trivial problem in most higher level languages, it was really hard for me getting it done in Assembly. I didn't want to "cheat" by using extern C functions like qsort etc (apart from printf for printing the final result as usual), so I implemented everything using only "pure" assembly and system functions for file handling.
+
+Because Bubble Sort was the easiest to implement, the solution is quite slow compared to using C and qsort, and takes 200ms. But I'm glad that I got it working at all.
+
+Also, I'm sure I could have saved quite a lot of instructions and registers by using the stack effectively etc...
+
