@@ -61,3 +61,6 @@ I used the an implementation of the [Lehmer code](https://en.wikipedia.org/wiki/
 
 ### 025
 Again using an array to represent the big integers, similar to problems 016 and 020.
+
+### 026
+The solution works by first calculating a = 10 mod D and then loop with a = (a * 10) mod d until a gets zero. The number of iterations gives the cycle length.
