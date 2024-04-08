@@ -40,8 +40,8 @@ getlength:
 
 setmax:
     cmp     esi, ecx    ;check if length > max
-    cmovg   ecx, esi    ;else set new max
-    cmovg   r8d, ebx    ;current d with max length (result at the end)
+    cmovg   ecx, esi    ;if yes, set new max
+    cmovg   r8d, ebx    ;and put current d with max length in r8d
     jmp     cycle_outer ;next d
     
 print:                  ;printing routine, differs slightly from OS to OS
