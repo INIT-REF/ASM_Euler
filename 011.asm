@@ -71,10 +71,7 @@ exit:                       ;exit routine, dito
 
 setmax:
     cmp     eax, ecx
-    jl      back
-    mov     ecx, eax
-
-back:
+    cmovl   ecx, eax
     ret
 
 section .note.GNU-stack     ;just for gcc
