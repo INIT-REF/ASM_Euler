@@ -38,11 +38,11 @@ incB:
     jne     incB                    ;if not, try next
     cmp     ecx, 1000               ;limit reached?
     jge     print                   ;if yes, print result
-    mov     ebx, 1000               ;set a to -1000
+    mov     ebx, 1001               ;set a to -1001
     neg     ebx              
 
 incA:
-    inc     ebx         ;next a
+    add     ebx, 2      ;next a
     cmp     ebx, 1000   ;a > 1000
     jg      incB        ;if yes, try next b
     xor     eax, eax    ;reset n
