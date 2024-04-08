@@ -38,7 +38,7 @@ incB:
     jne     incB                    ;if not, try next
     cmp     ecx, 1000               ;limit reached?
     jge     print                   ;if yes, print result
-    mov     ebx, 1000               ;set b to -1000
+    mov     ebx, 1000               ;set a to -1000
     neg     ebx              
 
 incA:
