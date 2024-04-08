@@ -70,8 +70,8 @@ exit:                       ;exit routine, dito
     syscall
 
 setmax:
-    cmp     eax, ecx
-    cmovl   ecx, eax
+    cmp     eax, ecx        ;current product > max
+    cmovg   ecx, eax        ;if yes, replace max
     ret
 
 section .note.GNU-stack     ;just for gcc
