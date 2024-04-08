@@ -48,11 +48,8 @@ updatemax:
     add     r8d, [cache + 4 * eax]  ;add cache @ current number to length
     mov     [cache + 4 * ebx], r8d  ;update cache
     cmp     r8d, r9d                ;check if current length > max
-    jle     back                    ;if not, return
-    mov     r9d, r8d                ;if yes update max length
-    mov     r10d, ebx               ;update number of max length
-
-back:      
+    cmovg     r9d, r8d                ;if yes update max length
+    cmovg     r10d, ebx               ;update number of max length
     ret
 
 print:                      ;printing routine, differs slightly from OS to OS
