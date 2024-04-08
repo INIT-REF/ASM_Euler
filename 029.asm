@@ -19,9 +19,9 @@ nextbase:
 
 powers:
     mul     r9d             ;next power
-    cmp     eax, 100        ;power > 100
+    cmp     eax, 100        ;result > 100
     jg      finished        ;if yes, finished with current base
-    inc     edi             ;else increase edi
+    inc     edi             ;else increase power
     push    rax             ;current result on the stack
     mov     eax, 100        ;100 in eax for division
     div     edi             ;divide by power (gives duplicates + 1)
@@ -35,7 +35,7 @@ finished:
     jmp     nextbase        ;jump to nextbase
 
 result:
-    dec     ecx             ;subtract 1 from total for 
+    dec     ecx             ;subtract 1 from total, need to find out why
     sub     esi, ecx        ;subtract total from all terms
 
 print:                      ;printing routine, differs slightly from OS to OS
