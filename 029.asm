@@ -9,7 +9,6 @@ main:
     xor     ecx, ecx        ;sum of duplicates
     mov     esi, 9801       ;99^2 (all terms incl. duplicates)
     mov     eax, 1          ;first base - 1
-    xor     r8d, r8d        ;total of duplicates
 
 nextbase:
     inc     eax
@@ -27,7 +26,7 @@ powers:
     mov     eax, 100        ;100 in eax for division
     div     edi             ;divide by power (gives duplicates + 1)
     dec     eax             ;result - 1
-    add     r8d, eax        ;add to total
+    add     ecx, eax        ;add to total
     pop     rax             ;back from the stack
     jmp     powers          ;and continue with next power
 
@@ -36,8 +35,8 @@ finished:
     jmp     nextbase        ;jump to nextbase
 
 result:
-    dec     r8d             ;subtract 1 from total for 
-    sub     esi, r8d        ;subtract total from all terms
+    dec     ecx             ;subtract 1 from total for 
+    sub     esi, ecx        ;subtract total from all terms
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
