@@ -31,8 +31,7 @@ gcd_mod:
 
 gcd:
     test    eax, eax    ;check if eax is zero
-    jz      lcm         ;if it is, go directly to lcm
-    mov     ebx, eax    ;if not, replace ebx with eax (as ebx was zero)
+    cmovnz  ebx, eax    ;if not, replace ebx with eax (as ebx was zero)
 
 lcm:
     pop     rax         ;get original number 1 from the stack
