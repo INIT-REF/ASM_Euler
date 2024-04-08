@@ -30,7 +30,7 @@ sieve_inner:
 reset:                  ;reset registers for next operation
     mov     ecx, 1      ;b
     xor     edi, edi    ;max n
-    xor     esi, esi  ;max a * b
+    xor     esi, esi    ;max a * b
 
 incB:
     inc     ecx                     ;next b
@@ -52,10 +52,10 @@ countprimes:
     push    rax                     ;twice
     mul     eax                     ;n^2
     add     eax, ecx                ;n^2 + b
-    mov     r8d, eax               ;copy result
+    mov     r8d, eax                ;copy result
     pop     rax                     ;n back from the stack
     mul     ebx                     ;n * a
-    add     eax, r8d               ;n^2 + (a * n) + b
+    add     eax, r8d                ;n^2 + (a * n) + b
     cmp     byte [primes + eax], 0  ;is result prime?
     pop     rax                     ;get n back
     je      updatemax               ;if not, updatemax
@@ -68,7 +68,7 @@ updatemax:
     mov     edi, eax    ;else update max
     mov     eax, ebx    ;a in eax
     mul     ecx         ;a * b
-    mov     esi, eax   ;result in r11d
+    mov     esi, eax    ;result in esi
     jmp     incA        ;and back to incA
 
 print:                  ;printing routine, differs slightly from OS to OS
