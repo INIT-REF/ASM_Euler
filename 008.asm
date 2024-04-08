@@ -33,8 +33,7 @@ main:
 
 updatemax:
     cmp     rax, r8                 ;check if current product > max
-    jle     next                    ;if not, continue with next product
-    mov     r8, rax                 ;if yes, store product in max
+    cmovg   r8, rax                 ;if yes, store product in max
 
 next:
     xor     rax, rax                ;prepare rax for next product
