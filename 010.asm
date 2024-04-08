@@ -19,8 +19,6 @@ sieve_outer:
     jg      reset                   ;if it is, jump to reset
     cmp     byte [primes + ebx], 0  ;check if ebx is not prime
     je      sieve_outer             ;if not prime, try next number
-    mov     eax, ebx                ;array index for inner loop
-    mul     ebx                     ;begin with square of outer index
 
 sieve_inner:
     mov     byte [primes + eax], 0  ;set multiple to not prime
