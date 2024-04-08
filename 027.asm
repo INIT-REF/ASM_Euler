@@ -29,8 +29,8 @@ sieve_inner:
 
 reset:                  ;reset registers for next operation
     mov     ecx, 1      ;b
-    xor     r9d, r9d    ;max n
-    xor     r10d, r10d  ;max a * b
+    xor     edi, edi    ;max n
+    xor     esi, esi  ;max a * b
 
 incB:
     inc     ecx                     ;next b
@@ -52,10 +52,10 @@ countprimes:
     push    rax                     ;twice
     mul     eax                     ;n^2
     add     eax, ecx                ;n^2 + b
-    mov     r11d, eax               ;copy result
+    mov     r8d, eax               ;copy result
     pop     rax                     ;n back from the stack
     mul     ebx                     ;n * a
-    add     eax, r11d               ;n^2 + (a * n) + b
+    add     eax, r8d               ;n^2 + (a * n) + b
     cmp     byte [primes + eax], 0  ;is result prime?
     pop     rax                     ;get n back
     je      updatemax               ;if not, updatemax
@@ -63,18 +63,17 @@ countprimes:
     jmp     countprimes             ;and continue
 
 updatemax:
-    cmp     eax, r9d    ;n > max n
+    cmp     eax, edi    ;n > max n
     jl      incA        ;if not, back to next A
-    mov     r9d, eax    ;else update max
+    mov     edi, eax    ;else update max
     mov     eax, ebx    ;a in eax
     mul     ecx         ;a * b
-    mov     r10d, eax   ;result in r11d
+    mov     esi, eax   ;result in r11d
     jmp     incA        ;and back to incA
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, r10d
     call    printf
     pop     rbp
 
