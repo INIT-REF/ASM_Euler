@@ -20,7 +20,7 @@ nextbase:
 powers:
     mul     r9d             ;next power
     cmp     eax, 100        ;power > 100
-    jg      finished        ;if yes, get duplicates for current power
+    jg      finished        ;if yes, finished with current base
     inc     edi             ;else increase edi
     push    rax             ;current result on the stack
     mov     eax, 100        ;100 in eax for division
