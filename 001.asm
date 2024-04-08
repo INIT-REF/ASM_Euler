@@ -10,18 +10,16 @@ main:
     xor     eax, eax        ;result
     xor     ebx, ebx        ;current number
     xor     ecx, ecx        ;array index
-
-arr0:
-    cmp     ecx, 7          ;check if we reached the end of the array
-    jl      countup         ;if not, continue counting
-    xor     ecx, ecx        ;else reset index
+    xor     edx, edx        ;zero for cmov later
 
 countup:
     add     eax, ebx                ;add current number to result
     add     ebx, [steps + ecx * 4]  ;add steps@ecx to current number
-    inc     ecx                     ;increase the array index 
+    inc     ecx                     ;increase the array index
+    cmp     ecx, 7                  ;check if end of steps
+    cmove   ecx, edx                ;if yes, zero ecx
     cmp     ebx, 1000               ;check if we reached 1000
-    jl      arr0                    ;if not, continue
+    jl      countup                 ;if not, continue
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
