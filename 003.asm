@@ -20,8 +20,9 @@ divide2:
     mov     rbx, rax    ;put result of last division in rbx
     cmp     rbx, 4      ;check if greater or equal to 4
     jge     divide2     ;if yes, continue divisions
-    jl      switch      ;if not, the number has arrived at 2
+    cmovb   rcx, rbx    ;if not, the number has arrived at 2
                         ;or the remainder is a prime greater than 2
+    jmp     print       ;and we are finished
 
 odd:
     mov     rcx, 1      ;set rcx to 1 to prepare for odd divisors
@@ -41,10 +42,7 @@ divide:
     cmp     rax, rbx    ;check if less or equal to current dividend
     jle     divide      ;if yes, continue divisions
     cmp     rcx, rbx    ;else compare last factor with dividend
-    jg      print       ;if the factor is greater, print that
-
-switch:
-    mov     rcx, rbx    ;else print the dividend
+    cmovb   rcx, rbx    ;if the factor is greater, print that
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
