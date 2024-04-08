@@ -15,7 +15,7 @@ sum_outer:
     mov     ebx, [coins + 4 * eax]  ;coins[eax] in ebx
 
 sum_inner:
-    mov     edx, ebx                ;copy coins[eax] to edx
+    mov     edx, ebx                ;copy ebx to edx
     sub     edx, [coins + 4 * eax]  ;subtract coins[eax]
     mov     edi, [sums + 4 * edx]   ;move result in edi
     add     [sums + 4 * ebx], edi   ;add to sums[ebx]
