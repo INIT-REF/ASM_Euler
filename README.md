@@ -64,3 +64,6 @@ Again using an array to represent the big integers, similar to problems 016 and 
 
 ### 026
 The solution works by first calculating a = 10 mod D and then loop with a = (a * 10) mod d until a gets zero. The number of iterations gives the cycle length.
+
+### 027
+As the formula needs to deliver a prime for n = 0, we can limit the range for b to primes below 1000. I set the limit for the prime sieve to 2000, because the highest prime that the formula delivers (given the restrictions) is below that.
