@@ -44,7 +44,6 @@ updatesig:
     dec     esi         ;decrease first significant digit
     jmp     fib_outer   ;jump to outer loop
 
-
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg

@@ -40,12 +40,10 @@ getlength:
 
 setmax:
     cmp     esi, ecx    ;check if length > max
-    jle     cycle_outer ;if not, next d
-    mov     ecx, esi    ;else set new max
-    mov     r8d, ebx    ;current d with max length (result at the end)
+    cmovg   ecx, esi    ;else set new max
+    cmovg   r8d, ebx    ;current d with max length (result at the end)
     jmp     cycle_outer ;next d
     
-
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
