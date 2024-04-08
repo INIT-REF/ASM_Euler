@@ -17,7 +17,6 @@ paths:
     inc     rbx         ;increase counter
     cmp     rbx, 20     ;check if counter is <= 20
     jle     paths       ;if yes, repeat
-    
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
