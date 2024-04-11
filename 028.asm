@@ -9,12 +9,10 @@ main:
     mov     edi, 4      ;init edi (loop counter)
     mov     ebx, 1      ;init total
     mov     esi, 1      ;intermediate sum
-    mov     ecx, 4      ;for divisions
 
 sum:
-    xor     edx, edx    ;reset remainder
     mov     eax, edi    ;copy counter
-    div     ecx         ;divide by 4
+    shr     eax, 2      ;divide by 4
     shl     eax, 1      ;multiply by 2
     add     esi, eax    ;intermediate sum += result
     add     ebx, esi    ;add to total

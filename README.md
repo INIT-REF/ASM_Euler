@@ -68,6 +68,9 @@ The solution works by first calculating a = 10 mod D and then loop with a = (a *
 ### 027
 As the formula needs to deliver a prime for n = 0, we can limit the range for b to primes below 1000. I set the limit for the prime sieve to 2000, because the highest prime that the formula delivers (given the restrictions) is below that. Also, a has to be odd in order for the formula to only produce odd numbers.
 
+### 028
+It is intended that I first divide by 4 and then multiply by 2 in the sum function, instead of just dividing by 2. We need the integer division by 4 first, in order to loose the two rightmost bits. 
+
 ### 032
 We only need to take 4-digit products between 1234 and 9876 into account. If the product had 3 digits or less, we would need to use 6 digits or more for multiplicand and multiplier, which could never result in a product that small. Vice versa, if the product had 5 digits or more, we couldn’t make that using only 4 digits or less for multiplicand and multiplier.
 
