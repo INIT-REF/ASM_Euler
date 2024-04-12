@@ -1,7 +1,7 @@
 section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
-    abc times 10 db 0           ;digits in number
-    pds db "123456789", 1       ;pandigital string
+    abc times 8 db 0           ;digits in number
+    pds db "1234567", 1       ;pandigital string
 
 section .text
     extern printf
@@ -33,7 +33,7 @@ isprime:
     push    rax         ;put number on the stack
     call    digits      ;digits in abc and compare with pds
     pop     rax         ;get number back
-    cmp     esi, ebx    ;is abc 1-n pandigital?
+    cmp     esi, 8    ;is abc 1-n pandigital?
     jne     next        ;if not, try next prime
 
 print:                      ;printing routine, differs slightly from OS to OS
@@ -50,7 +50,6 @@ exit:                       ;exit routine, dito
 
 digits:
     xor     esi, esi                ;reset esi, array index
-    mov     ebx, 1                  ;length of number
     
 resetabc:
     mov     byte [abc + esi], 0     ;reset abc[esi] to 0
@@ -59,7 +58,6 @@ resetabc:
     jl      resetabc                ;if not, continue
 
 convert:
-    inc     ebx                         ;increase length counter
     xor     edx, edx                    ;reset remainder
     div     edi                         ;divide by 10
     mov     [abc + edx - 1], dl         ;put digit in abc string
