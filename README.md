@@ -79,3 +79,6 @@ I used 7 * 9! as the upper bound, because 8 * 9! is still a 7-digit number. The 
 
 ### 036
 We only need to check odd numbers, because the least significant bit in base 2 can't be 0 for this problem.
+
+### 039
+Again using Dickson's method from problem 009. As this produces perimeters of <= 1000 for input values up to 168, we can limit the range to this value.
