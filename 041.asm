@@ -2,41 +2,34 @@ section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
     abc times 10 db 0           ;digits in number
     pds db "123456789", 1       ;pandigital string
-    primes times 7654321 db 1   ;array for prime sieve
 
 section .text
     extern printf
     global main
 
 main:
-    mov     byte [primes], 0        ;set primes[0] = 0
-    mov     byte [primes + 1], 0    ;set primes[1] = 0
-    mov     ebx, 1                  ;array index for outer loop
     mov     edi, 10                 ;for divisions
-
-sieve_outer:
-    inc     ebx                     ;increase index
-    mov     eax, ebx                ;copy to eax for squaring
-    mul     ebx                     ;square
-    cmp     eax, 7654321            ;check if square is > limit    
-    jg      reset                   ;if it is, jump to reset
-    cmp     byte [primes + ebx], 0  ;check if ebx is no prime
-    je      sieve_outer             ;if no prime, try next number
-
-sieve_inner:
-    mov     byte [primes + eax], 0  ;set multiple to not prime
-    add     eax, ebx                ;next multiple
-    cmp     eax, 7654321            ;check if square is <= limit
-    jl      sieve_inner             ;if it is, continue with inner loop
-    jmp     sieve_outer             ;if not, continue with outer loop
-
-reset:
-    mov     eax, 7654321            ;upper limit in eax
+    mov     r10d, 7654321           ;upper limit in r10d
 
 next:
-    dec     eax                     ;next lower number
-    cmp     byte [primes + eax], 1  ;is number prime?
-    jne     next                    ;if not, try next
+    sub     r10d, 2                 ;next lower odd number
+    mov     esi, 1                  ;divisor for prime test
+
+primetest:
+    add     esi, 2      ;next odd divisor
+    mov     eax, esi    ;square divisor
+    mul     esi
+    cmp     eax, r10d   ;check if divisor > number
+    jg      isprime     ;if yes, we have a prime
+    mov     eax, r10d   ;number in eax for division
+    xor     edx, edx    ;reset remainder
+    div     esi         ;divide by current divisor
+    test    edx, edx    ;is remainder 0?
+    jnz     primetest   ;if not, continue
+    jmp     next        ;else check next number
+
+isprime:
+    mov     eax, r10d   ;number in eax
     push    rax         ;put number on the stack
     call    digits      ;digits in abc and compare with pds
     pop     rax         ;get number back
