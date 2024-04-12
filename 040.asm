@@ -28,8 +28,8 @@ digits:
 
 buildstring:
     pop     rdx                     ;digit from the stack
+    add     dl, '0'                 ;get the ASCII value
     mov     byte [cc + esi], dl     ;append digit to string
-    add     byte [cc + esi], '0'    ;get the ASCII value
     dec     ecx                     ;decrease length counter
     inc     esi                     ;increase the array counter
     cmp     esi, 1000000            ;end of array?
