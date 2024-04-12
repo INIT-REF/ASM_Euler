@@ -82,3 +82,6 @@ We only need to check odd numbers, because the least significant bit in base 2 c
 
 ### 039
 Again using Dickson's method from problem 009. As this produces perimeters of <= 1000 for input values up to 168, we can limit the range to this value.
+
+### 041
+We can set the upper limit to 7654321, because all 8- and 9-digit numbers are divisible by three (as the digit sum is divisible by three). And because I assumed that the number would be a large 7-digit number, I didn't implement a prime sieve but instead used a quick trial division to identify primes.
