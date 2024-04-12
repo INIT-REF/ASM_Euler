@@ -43,8 +43,8 @@ exit:                       ;exit routine, dito
 
 reverse:
     xor     edx, edx    ;clear remainder
-    div     edi         ;divide by 10
-    imul    ecx, edi    ;multiply rcx by 10
+    div     edi         ;divide by base
+    imul    ecx, edi    ;multiply rcx by base
     add     ecx, edx    ;add remainder
     test    eax, eax    ;number reduced to 0
     jnz     reverse     ;if not, repeat
