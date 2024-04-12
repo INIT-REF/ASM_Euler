@@ -78,4 +78,4 @@ We only need to take 4-digit products between 1234 and 9876 into account. If the
 I used 7 * 9! as the upper bound, because 8 * 9! is still a 7-digit number. The acutal greatest number that can be written as the sum of its digit factorials is much lower than this, but it was ok as a rough guess.
 
 ### 036
-We only need to check odd numbers, because the least significant bit in base 2 can't be 0 for this problem. We also need to use 64bit registers for base 2 because the converted numbers quickly get to big to fit in a 32 bit register.
+We only need to check odd numbers, because the least significant bit in base 2 can't be 0 for this problem.
