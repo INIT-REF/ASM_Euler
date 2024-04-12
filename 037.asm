@@ -47,14 +47,14 @@ trunc_right:
     cmp     eax, 10                 ;number still >= 10?
     jge     trunc_right             ;if yes, repeat
     mov     esi, 1000000            ;1000000 in esi for division
- 
+    mov     eax, esi                ;copy to eax for next step
+
 setdivisor:
-    mov     eax, esi                ;esi in eax for division
     xor     edx, edx                ;reset remainder
     div     edi                     ;divide by 10
-    mov     esi, eax                ;result back in esi
-    cmp     esi, ebx                ;esi < number?
+    cmp     eax, ebx                ;eax < number?
     jg      setdivisor              ;if not, repeat
+    mov     esi, eax                ;else set esi
     mov     eax, ebx                ;prime in eax
 
 trunc_left:
