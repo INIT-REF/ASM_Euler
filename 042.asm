@@ -45,7 +45,7 @@ tris:
     jmp     getvalue    ;jump to getvalue for first word
 
 next:
-    add     edi, 1      ;increase edi to start of next word
+    inc     edi         ;increase edi (start of next word)
     xor     eax, eax    ;clear eax
 
 getvalue:

@@ -15,7 +15,7 @@ sieve_outer:
     inc     ebx                     ;increase index
     mov     eax, ebx                ;copy to eax for squaring
     mul     ebx                     ;square
-    cmp     eax, 2000000            ;check if square is > limit    
+    cmp     eax, 2000000            ;check if multiple is > limit    
     jg      reset                   ;if it is, jump to reset
     cmp     byte [primes + ebx], 0  ;check if ebx is not prime
     je      sieve_outer             ;if not prime, try next number

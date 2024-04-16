@@ -15,7 +15,7 @@ sieve_outer:
     inc     ebx                     ;increase index
     mov     eax, ebx                ;copy to eax for squaring
     mul     ebx                     ;square
-    cmp     eax, 115000             ;check if square is > limit    
+    cmp     eax, 115000             ;check if multiple is > limit    
     jg      reset                   ;if it is, jump to reset
     cmp     byte [primes + ebx], 0  ;check if ebx is no prime
     je      sieve_outer             ;if no prime, try next number
@@ -30,12 +30,12 @@ sieve_inner:
 reset:                              ;reset registers for next operation
     xor     ebx, ebx
     xor     ecx, ecx
+    xor     eax, eax
 
 find10001st:
     inc     ebx                     ;increase array index
-    cmp     byte [primes + ebx], 1  ;check if primes[ebx] is 1
-    jne     find10001st             ;if not, continue
-    inc     ecx                     ;if yes, increase counter
+    mov     al, [primes + ebx]      ;primes[ebx] in al
+    add     ecx, eax                ;add to ecx
     cmp     ecx, 10001              ;check if counter arrived at 10001
     jl      find10001st             ;if not, continue
     
