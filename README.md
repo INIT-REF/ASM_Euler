@@ -88,3 +88,6 @@ We can set the upper limit to 7654321, because all 8- and 9-digit numbers are di
 
 ### 044
 I assumed that the first (lowest) pair, for which the difference and sum are pentagonal is the one with the lowest difference. Unfortunately, I have no proof for that assumption, but it turned out to be the correct answer. Also, I set an arbitrary limit to only search within the first 2500 pentagonal numbers.
+
+### 045
+As all hexagonal numbers are also triangular numbers, it is sufficient to find the next pentagonal number which is also hexagonal.
