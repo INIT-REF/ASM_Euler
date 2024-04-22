@@ -85,3 +85,6 @@ Again using Dickson's method from problem 009. As this produces perimeters of <=
 
 ### 041
 We can set the upper limit to 7654321, because all 8- and 9-digit numbers are divisible by three (as the digit sum is divisible by three). And because I assumed that the number would be a large 7-digit number, I didn't implement a prime sieve but instead used a quick trial division to identify primes.
+
+### 044
+I assumed that the first (lowest) pair, for which the difference and sum are pentagonal is the one with the lowest difference. Unfortunately, I have no proof for that assumption, but it turned out to be the correct answer. Also, I set an arbitrary limit to only search within the first 2500 pentagonal numbers.
