@@ -1,5 +1,5 @@
 section .data
-    msg db "%lld", 10, 0              ;return string for printf (just the result)
+    msg db "%lld", 10, 0                ;return string for printf (just the result)
     num dd 1, 0, 2, 3, 4, 5, 6, 7, 8, 9 ;first perutation
     divs dd 2, 3, 5, 7, 11, 13, 17      ;divisors
    
