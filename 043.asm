@@ -8,17 +8,10 @@ section .text
     global main
 
 main:
-    xor     esi, esi            ;setup some registers
-    xor     rcx, rcx
+    xor     rcx, rcx    ;result
     
 reset:
-    xor     rax, rax
-    xor     edi, edi
-    call    convert             ;convert current permutation to actual number
-    mov     rbx, 9876543210     ;last permutation reached?
-    cmp     rax, rbx
-    jge     print               ;if yes, print result
-    xor     rax, rax            ;else reset some registers
+    xor     rax, rax    ;reset some registers
     xor     rbx, rbx
     mov     edi, 1
     xor     esi, esi
@@ -56,6 +49,8 @@ nextperm:
 
 findpivot:                          ;find the "pivot"
     dec     edi
+    cmp     edi, 0                  ;last permutation (index < 0)?
+    jl      print                   ;if yes, print result
     mov     eax, [num + 4 * edi]
     inc     edi
     mov     ebx, [num + 4 * edi]
