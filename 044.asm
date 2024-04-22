@@ -4,6 +4,7 @@ section .data
 section .bss
     pent resd 2501      ;for the first 2500 pentagonal numbers
     ispent resb 9373750 ;flags for pentagonal numbers
+
 section .text
     extern printf
     global main
