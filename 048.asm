@@ -32,12 +32,11 @@ finished:
     mov     rax, rcx    ;sum in rax
     xor     rdx, rdx    ;reset remainder
     div     rbx         ;divide by 1e10
-    mov     rcx, rdx    ;move remainder in rcx
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     rsi, rcx
+    mov     rsi, rdx
     call    printf
     pop     rbp
 
