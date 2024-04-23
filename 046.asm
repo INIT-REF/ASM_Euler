@@ -50,7 +50,7 @@ lowerprime:
 
 squaretest:
     sub     ecx, edi                ;subtract
-    lea     edi, [edi+2]            ;next odd number
+    lea     edi, [edi + 2]          ;next odd number
     jg      squaretest              ;if result > edi, continue
     je      next                    ;if result = edi, ecx was a perfect square
     jmp     lowerprime              ;if result < edi, try next lower prime
