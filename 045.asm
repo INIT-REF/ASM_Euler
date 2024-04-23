@@ -21,12 +21,11 @@ next:
     mov     rdi, 1      ;init rdi for squaretest
 
 squaretest:
-    inc     rdi         ;next candidate
-    mov     rsi, rdi    ;copy to rsi
-    imul    rsi, rdi    ;square
-    cmp     rsi, rax    ;check if square = rax
-    jg      next        ;if greater, rax is no perfect square
-    jl      squaretest  ;if lower, continue
+    sub     rax, rdi        ;subtract
+    lea     rdi, [rdi + 2]  ;next odd number
+    jg      squaretest      ;if greater, continue testing
+    jl      next            ;if lower, try next n
+    shr     rdi, 1          ;if equal, rdi / 2 is now the square root
 
 hextest:
     inc     rdi         ;sqrt(8 * P(n) + 1) + 1
