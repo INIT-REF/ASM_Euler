@@ -35,19 +35,13 @@ reset:
 resetcount:
     xor     esi, esi                ;number counter
 
-findfirst:
+findresult:
     inc     edi                     ;next number
     cmp     byte [primes + edi], 4  ;has 4 distinct prime factors?
-    jne     findfirst               ;if not, try next number
+    jne     resetcount              ;if not, try next number
     inc     esi                     ;if yes, increase counter
-
-findnext:
-    inc     edi                     ;next number
-    cmp     byte [primes + edi], 4  ;has 4 distinct prime factors?
-    jne     resetcount              ;if not, reset counter
-    inc     esi                     ;else increase counter
-    cmp     esi, 4                  ;4 consecutive numbers found?
-    jl      findnext                ;if not, continue
+    cmp     esi, 4                  ;have we found 4 consecutive numbers?
+    jl      findresult              ;if not, continue
 
 finished:
     mov     esi, edi    ;copy last number to esi
