@@ -43,17 +43,14 @@ nextstarter:
 
 nextfollowers:
     inc     ebx                     ;next second number
-    cmp     ebx, 10000              ;end of array?
-    je      nextstarter             ;if yes, try next starting number
     cmp     byte [primes + ebx], 1  ;is it prime?
     jne     nextfollowers           ;if not, try next
     mov     ecx, ebx                ;else put it in ecx
     sub     ecx, eax                ;and subtract eax
-    mov     edi, ebx                ;copy ebx in edi
-    add     edi, ecx                ;add difference
-    cmp     edi, 10000              ;result > 9999?
+    add     ecx, ebx                ;add ebx to difference
+    cmp     ecx, 10000              ;result > 9999?
     jge     nextstarter             ;if yes, try next starter
-    cmp     byte [primes + edi], 1  ;is third number prime?
+    cmp     byte [primes + ecx], 1  ;is third number prime?
     jne     nextfollowers           ;if not, try next second number
     mov     r8d, eax                ;copy of eax to save it
     xor     esi, esi                ;reset esi
@@ -69,18 +66,18 @@ getdigits:
     mov     eax, ebx                ;put ebx in eax for divide
     lea     r9d, [digits + 10]      ;load address of digits[10] in r9d
     call    divide                  ;call divide again
-    mov     eax, edi                ;repeat for edi
+    mov     eax, ecx                ;repeat for edi
     lea     r9d, [digits + 20]
     call    divide
     mov     eax, r8d                ;restore eax
-    xor     esi, esi                ;reset esi and ebx for permcheck
-    xor     ecx, ecx
+    xor     esi, esi                ;reset esi and ecx for permcheck
+    xor     edi, edi
 
 permcheck:
-    mov     cl, [digits + esi]              ;get digits[esi]
-    cmp     byte [digits + esi + 10], cl    ;must be same as digits[esi + 10]
+    mov     dil, [digits + esi]             ;get digits[esi]
+    cmp     byte [digits + esi + 10], dil   ;must be same as digits[esi + 10]
     jne     nextfollowers                   ;if not, try next followers
-    cmp     byte [digits + esi + 20], cl    ;same for digits[esi + 20]
+    cmp     byte [digits + esi + 20], dil   ;same for digits[esi + 20]
     jne     nextfollowers
     inc     esi                             ;next index
     cmp     esi, 10                         ;finished?
@@ -92,7 +89,7 @@ result:
     imul    rsi, 100000000
     imul    rbx, 10000
     add     rsi, rbx
-    add     rsi, rdi
+    add     rsi, rcx
  
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
