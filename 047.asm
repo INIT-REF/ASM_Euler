@@ -1,72 +1,61 @@
 section .data
-    msg db "%d", 10, 0  ;return string for printf (just the result)
+    msg db "%d", 10, 0          ;return string for printf (just the result)
+    primes times 1000000 db 0   ;array for the prime sieve
 
 section .text
     extern printf
     global main
 
 main:
-    mov     ebx, 209    ;(2 * 3 * 5 * 7) - 1
+    mov     byte [primes], 1        ;set primes[0] = 1
+    mov     byte [primes + 1], 1    ;set primes[1] = 1
+    mov     ebx, 1                  ;array index for outer loop
+
+sieve_outer:
+    inc     ebx                     ;increase index
+    mov     eax, ebx                ;copy to eax for squaring
+    mul     ebx                     ;square
+    cmp     eax, 1000000            ;check if square is >= limit    
+    jge     reset                   ;if it is, jump to reset
+    mov     eax, ebx                ;else put ebx in eax
+    cmp     byte [primes + ebx], 0  ;check if primes[ebx] is 0
+    je      sieve_inner             ;if no prime, try next number
+    jmp     sieve_outer
+
+sieve_inner:
+    add     byte [primes + eax], 1  ;increase factor count
+    add     eax, ebx                ;next multiple
+    cmp     eax, 1000000            ;check if multiple is <= limit
+    jl      sieve_inner             ;if it is, continue with inner loop
+    jmp     sieve_outer             ;if not, continue with outer loop
 
 reset:
-    xor     r8d, r8d    ;number counter
+    xor     edi, edi                ;current number
 
-next:
-    xor     esi, esi    ;prime factor counter
-    inc     ebx         ;next number
-    mov     ecx, ebx    ;copy in ecx
-    test    ecx, 1      ;is number odd?
-    jnz     odd         ;if yes, jump to odd
-    inc     esi         ;if not, increase esi, because 2 is a factor
+resetcount:
+    xor     esi, esi                ;number counter
 
-even:
-    shr     ecx, 1      ;eax / 2
-    test    ecx, 1      ;is eax now odd?
-    jz      even        ;if not, continue dividing by 2
-    cmp     ecx, 105    ;number < 3 * 5 * 7?
-    jl      reset       ;if yes, reset
+findfirst:
+    inc     edi                     ;next number
+    cmp     byte [primes + edi], 4  ;has 4 distinct prime factors?
+    jne     findfirst               ;if not, try next number
+    inc     esi                     ;if yes, increase counter
 
-odd:
-    mov     edi, 1      ;for trial divisions
-
-incdiv:
-    add     edi, 2      ;next odd divisor
-    mov     eax, ecx    ;number in eax for trial divison
-    xor     edx, edx    ;reset remainder
-    div     edi         ;divide by edi
-    test    edx, edx    ;is remainder 0?
-    jnz     incdiv      ;if not, try next divisor
-    inc     esi         ;else increase counter
-    cmp     esi, 4      ;counter > 4?
-    jg      reset       ;if yes, reset
-
-divide:
-    mov     eax, ecx    ;number in eax for divison
-    xor     edx, edx    ;reset remainder
-    div     edi         ;divide by current divisor
-    test    edx, edx    ;remainder still 0?
-    jnz     incdiv      ;if not, try next divisor
-    mov     ecx, eax    ;else put result in ecx
-    cmp     ecx, 1      ;number reduced to 1?
-    je      finished    ;if yes, jump to finished
-    mov     eax, edi    ;else put divisor in eax for squaring
-    mul     edi         ;square
-    cmp     eax, ecx    ;square <= number
-    jle     divide      ;if yes, continue
-    inc     esi         ;else account for remaining prime factor
+findnext:
+    inc     edi                     ;next number
+    cmp     byte [primes + edi], 4  ;has 4 distinct prime factors?
+    jne     resetcount              ;if not, reset counter
+    inc     esi                     ;else increase counter
+    cmp     esi, 4                  ;4 consecutive numbers found?
+    jl      findnext                ;if not, continue
 
 finished:
-    cmp     esi, 4      ;else check if we have 4 distinct prime factors
-    jl      reset       ;if not, reset number count
-    inc     r8d         ;if yes, increase number counter
-    cmp     r8d, 4      ;have we found 4 consecutive numbers?
-    jl      next        ;if not, try next number
-    sub     ebx, 3      ;else subtract 3 from ebx to get the first number
-    
+    mov     esi, edi    ;copy last number to esi
+    sub     esi, 3      ;subtract 3 to get first number
+ 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, ebx
     call    printf
     pop     rbp
 
@@ -75,4 +64,4 @@ exit:                   ;exit routine, dito
     xor     edi, edi
     syscall
 
-section .note.GNU-stack ;just for gcc
+section .note.GNU-stack     ;just for gcc
