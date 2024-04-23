@@ -19,7 +19,7 @@ sieve_outer:
     jge     reset                   ;if it is, jump to reset
     mov     eax, ebx                ;else put ebx in eax
     cmp     byte [primes + ebx], 0  ;check if primes[ebx] is 0
-    je      sieve_inner             ;if no prime, try next number
+    je      sieve_inner             ;if not, try next number
     jmp     sieve_outer
 
 sieve_inner:
