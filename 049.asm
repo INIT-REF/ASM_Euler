@@ -40,13 +40,18 @@ nextstarter:
     cmp     byte [primes + eax], 1  ;is number prime?
     jne     nextstarter             ;if not, try next
     mov     ebx, eax                ;else set ebx
-    add     ebx, 3330               ;and add 3330
+
+nextfollowers:
+    inc     ebx                     ;next second number
     cmp     byte [primes + ebx], 1  ;is it prime?
-    jne     nextstarter             ;if not, try next
+    jne     nextfollowers           ;if not, try next
     mov     ecx, ebx                ;else put it in ecx
-    add     ecx, 3330               ;and add 3330
+    sub     ecx, eax                ;and subtract eax
+    add     ecx, ebx                ;add ebx to difference
+    cmp     ecx, 10000              ;result > 9999?
+    jge     nextstarter             ;if yes, try next starter
     cmp     byte [primes + ecx], 1  ;is third number prime?
-    jne     nextstarter             ;if not, try next starter
+    jne     nextfollowers           ;if not, try next second number
     mov     r8d, eax                ;copy of eax to save it
     xor     esi, esi                ;reset esi
 
@@ -71,9 +76,9 @@ getdigits:
 permcheck:
     mov     dil, [digits + esi]             ;get digits[esi]
     cmp     byte [digits + esi + 10], dil   ;must be same as digits[esi + 10]
-    jne     nextstarter                     ;if not, try next starter
+    jne     nextfollowers                   ;if not, try next followers
     cmp     byte [digits + esi + 20], dil   ;same for digits[esi + 20]
-    jne     nextstarter
+    jne     nextfollowers
     inc     esi                             ;next index
     cmp     esi, 10                         ;finished?
     jl      permcheck                       ;if not, repeat
