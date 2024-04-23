@@ -30,22 +30,19 @@ sieve_inner:
     jmp     sieve_outer             ;if not, continue with outer loop
 
 reset:
-    xor     edi, edi                ;current number
+    xor     esi, esi                ;current number
 
 resetcount:
-    xor     esi, esi                ;number counter
+    xor     edi, edi                ;number counter
 
 findresult:
-    inc     edi                     ;next number
-    cmp     byte [primes + edi], 4  ;has 4 distinct prime factors?
+    inc     esi                     ;next number
+    cmp     byte [primes + esi], 4  ;has 4 distinct prime factors?
     jne     resetcount              ;if not, try next number
-    inc     esi                     ;if yes, increase counter
-    cmp     esi, 4                  ;have we found 4 consecutive numbers?
+    inc     edi                     ;if yes, increase counter
+    cmp     edi, 4                  ;have we found 4 consecutive numbers?
     jl      findresult              ;if not, continue
-
-finished:
-    mov     esi, edi    ;copy last number to esi
-    sub     esi, 3      ;subtract 3 to get first number
+    sub     esi, 3                  ;subtract 3 to get first number
  
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
