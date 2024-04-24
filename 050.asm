@@ -55,7 +55,7 @@ sum:
 reduce:
     dec     ecx                     ;decrease ecx
     cmp     byte [primes + ecx], 1  ;is ecx prime?
-    jne     reduce                  ;if not, decrease ebx again
+    jne     reduce                  ;if not, decrease ecx again
     sub     ebx, ecx                ;subtract last prime
     dec     edi                     ;decrease chain length
     cmp     byte [primes + ebx], 1  ;is ebx prime?
