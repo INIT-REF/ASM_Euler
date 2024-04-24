@@ -74,6 +74,9 @@ It is intended that I first divide by 4 and then multiply by 2 in the sum functi
 ### 032
 We only need to take 4-digit products between 1234 and 9876 into account. If the product had 3 digits or less, we would need to use 6 digits or more for multiplicand and multiplier, which could never result in a product that small. Vice versa, if the product had 5 digits or more, we couldn’t make that using only 4 digits or less for multiplicand and multiplier.
 
+### 033
+It can be shown, that the only possibility to "simplify" fractions that satisfy the problem is to cancel out the second digit of the numerator and the first digit of the denominator. Hence, my solution checks if these both digits match and skips all fractions for which it is not the case.
+
 ### 034
 I used 7 * 9! as the upper bound, because 8 * 9! is still a 7-digit number. The acutal greatest number that can be written as the sum of its digit factorials is much lower than this, but it was ok as a rough guess.
 
