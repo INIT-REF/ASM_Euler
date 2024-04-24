@@ -91,3 +91,6 @@ I assumed that the first (lowest) pair, for which the difference and sum are pen
 
 ### 045
 As all hexagonal numbers are also triangular numbers, it is sufficient to find the next pentagonal number which is also hexagonal.
+
+### 050
+I build up the sum of all primes from increasing starting primes until the sum goes over 1000000. Then I continuously subtract the last primes until the sum itself is a prime. I set an arbitrary limit for the starting prime of 1000, because I assumed that the longest chains would result from the lowest starting primes.
