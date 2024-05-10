@@ -48,11 +48,7 @@ readnext:
     je      print       ;if yes, print result
 
 findstart:
-    mov     al, [buf + r9d] ;read char
-    inc     r9d             ;increase index
-    cmp     al, 'G'         ;is char 'G' (next G in "Grid")?
-    jne     findstart       ;if not, try again
-    add     r9d, 7          ;add 7 to skip "Grid XX"
+    add     r9d, 8          ;add 8 to skip "Grid XX\n"
     xor     esi, esi        ;reset esi
     
 read:
