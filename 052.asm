@@ -10,21 +10,21 @@ section .text
     global main
 
 main:
-    mov     ebx, 1
-    mov     ecx, 10
+    mov     ebx, 1      ;staring number
+    mov     ecx, 10     ;for divisions
 
 nextn:
-    inc     ebx
-    mov     eax, ebx
-    xor     edi, edi
+    inc     ebx         ;next number
+    mov     eax, ebx    ;copy to eax
+    xor     edi, edi    ;reset edi (array index)
 
 reseto:
-    mov     byte [o + edi], 0
+    mov     byte [o + edi], 0   ;reset o to all zeros
     inc     edi
     cmp     edi, 10
     jl      reseto
 
-getodigits:
+getodigits:                     ;get digit pattern of x in o
     xor     edx, edx
     div     ecx
     inc     byte [o + edx]
@@ -32,7 +32,7 @@ getodigits:
     jg      getodigits
     mov     esi, 1
 
-nextmultiple:
+nextmultiple:                   ;get next multiple
     inc     esi
     cmp     esi, 7
     je      print
@@ -40,13 +40,13 @@ nextmultiple:
     mul     esi
     xor     edi, edi
 
-resetm:
-    mov     byte [m + edi], 0
+resetm:                 
+    mov     byte [m + edi], 0   ;reset m to all zeros
     inc     edi
     cmp     edi, 10
     jl      resetm
 
-getmdigits:
+getmdigits:                     ;get digit pattern of multiple
     xor     edx, edx
     div     ecx
     inc     byte [m + edx]
@@ -56,9 +56,9 @@ getmdigits:
     xor     eax, eax
     xor     edx, edx
 
-compare:
-    mov     al, [o + edi]
-    mov     dl, [m + edi]
+compare:                        ;compare both patterns and either try next
+    mov     al, [o + edi]       ;multiple if they match or next number if
+    mov     dl, [m + edi]       ;they don't
     inc     edi
     cmp     edi, 11
     je      nextmultiple
