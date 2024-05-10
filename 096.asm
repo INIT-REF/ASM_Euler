@@ -46,10 +46,8 @@ readnext:
     inc     r10d        ;next sudoku
     cmp     r10d, 51    ;all sudokus solved?
     je      print       ;if yes, print result
-
-findstart:
-    add     r9d, 8          ;add 8 to skip "Grid XX\n"
-    xor     esi, esi        ;reset esi
+    add     r9d, 8      ;add 8 to skip "Grid XX\n"
+    xor     esi, esi    ;reset esi
     
 read:
     mov     al, [buf + r9d] ;read Sukodu and skip line breaks
