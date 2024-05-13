@@ -6,12 +6,18 @@ section .text
     global main
 
 main:
-    mov     rbx, 1010101010     ;square root of 1020304050607080900
+    mov     rbx, 1010101030     ;square root of 1020304050607080900 + 20
     mov     rcx, 10             ;for divisions
     mov     rsi, 100            ;dito
+    xor     r8d, r8d            ;counter
+    mov     r10d, 60            ;for adding 60 if counter is even
 
 nextn:
-    add     rbx, 10     ;next candidate (must be a multiple of 10)
+    mov     r9d, 40     ;for adding 40 if counter is odd
+    inc     r8d         ;increase counter
+    test    r8d, 1      ;is counter even?
+    cmovz   r9d, r10d   ;if yes, set r9d to 60
+    add     rbx, r9     ;add 40 or 60 (last two digits need to be 30 or 70)
     mov     rax, rbx    ;in rax for mul/div
     mul     rbx         ;square
     mov     rdi, 9      ;reset rdi to 9
