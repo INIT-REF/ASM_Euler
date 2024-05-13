@@ -8,7 +8,7 @@ section .text
 main:
     mov     rbx, 1010101030     ;square root of 1020304050607080900 + 20
     mov     rcx, 10             ;for divisions
-    mov     rsi, 100            ;dito
+    mov     rsi, 10000          ;dito
     xor     r8d, r8d            ;counter
     mov     r10d, 60            ;for adding 60 if counter is even
 
@@ -20,7 +20,7 @@ nextn:
     add     rbx, r9     ;add 40 or 60 (last two digits need to be 30 or 70)
     mov     rax, rbx    ;in rax for mul/div
     mul     rbx         ;square
-    mov     rdi, 9      ;reset rdi to 9
+    mov     rdi, 8      ;reset rdi to 9
     xor     rdx, rdx    ;reset remainder
     div     rsi         ;divide by 100 to get to the "9" digit
 
