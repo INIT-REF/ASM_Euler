@@ -20,9 +20,9 @@ nextn:
     add     rbx, r9     ;add 40 or 60 (last two digits need to be 30 or 70)
     mov     rax, rbx    ;in rax for mul/div
     mul     rbx         ;square
-    mov     rdi, 8      ;reset rdi to 9
+    mov     rdi, 8      ;reset rdi to 8
     xor     rdx, rdx    ;reset remainder
-    div     rsi         ;divide by 100 to get to the "9" digit
+    div     rsi         ;divide by 10000 to get to the "8" digit
 
 digits:
     xor     rdx, rdx    ;reset remainder
