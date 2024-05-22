@@ -4,8 +4,7 @@ section .data
     sieve times limit db 1  ;prime sieve
 
 section .bss
-    primes resd 25  ;array for primes
-    sums resd limit ;array of sums
+    sums resd limit         ;array of sums
 
 section .text
     extern printf
@@ -14,6 +13,7 @@ section .text
 main:
     mov     dword [sums], 1         ;set sums[0] to 1
     mov     ebx, 1                  ;array index for outer loop
+    xor     ecx, ecx
 
 sieve_outer:
     inc     ebx                     ;increase index
@@ -32,37 +32,28 @@ sieve_inner:
     jmp     sieve_outer             ;if not, continue with outer loop
 
 reset:
-    mov     eax, 1                  ;reset eax and ebx
-    xor     ebx, ebx
-
-setprimes:
-    inc     eax                     ;next index
-    cmp     eax, limit              ;limit reached?
-    je      sum                     ;if yes, jump to sum
-    cmp     byte [sieve + eax], 1   ;is it prime?
-    jne     setprimes               ;if not, skip it
-    mov     [primes + 4 * ebx], eax ;else put in primes[ebx]
-    inc     ebx                     ;and increase ebx
-    jmp     setprimes               ;and repeat
-
-sum:
-    xor     eax, eax                ;reset eax
+    mov     eax, 1                  ;reset eax
 
 sum_outer:
-    mov     ebx, [primes + 4 * eax] ;primes[eax] in ebx
+    inc     eax                     ;next number
+    cmp     eax, limit              ;limit reached?
+    je      finished                ;if yes, get result
+    cmp     byte [sieve + eax], 1   ;is it prime?
+    jne     sum_outer               ;if not, increase it
+    mov     ebx, eax                ;prime in ebx
 
 sum_inner:
     mov     edx, ebx                ;copy ebx to edx
-    sub     edx, [primes + 4 * eax] ;subtract primes[eax]
+    sub     edx, eax                ;subtract eax
     mov     edi, [sums + 4 * edx]   ;move result in edi
     add     [sums + 4 * ebx], edi   ;add to sums[ebx]
     inc     ebx                     ;inc inner loop index
     cmp     ebx, limit              ;end of sums array?
     jle     sum_inner               ;if lower, continue inner loop
-    inc     eax                     ;else increase outer loop index
-    cmp     eax, 25                 ;end of primes array?
-    jl      sum_outer               ;if lower, start over with outer loop
-    xor     eax, eax                ;reset eax
+    jmp     sum_outer               ;else start over with outer loop
+
+finished:
+    xor     eax, eax
 
 result:
     inc     eax                             ;next index
