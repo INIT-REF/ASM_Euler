@@ -3,7 +3,7 @@ section .data
 
 section .bss
     nums resd 99
-    sums resd 101 ;array of sums, result will be in sums[200]
+    sums resd 101 ;array of sums, result will be in sums[100]
 
 section .text
     extern printf
