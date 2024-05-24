@@ -16,7 +16,7 @@ sieve_outer:
     cmp     eax, 115000     ;check if square is > limit    
     jg      reset           ;if it is, jump to reset
     bt      [primes], ebx   ;check if ebx is no prime
-    je      sieve_outer     ;if no prime, try next number
+    jnc     sieve_outer     ;if no prime, try next number
 
 sieve_inner:
     btr     [primes], eax   ;set multiple to not prime
