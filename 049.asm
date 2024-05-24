@@ -1,59 +1,58 @@
 section .data
-    msg db "%lld", 10, 0    ;return string for printf (just the result)
-    primes times 10000 db 1 ;array for the prime sieve
-    digits times 30 db 0    ;digits for permutation check
+    msg db "%lld", 10, 0        ;return string for printf (just the result)
+    primes times 1250 db 255    ;array for the prime sieve
+    digits times 30 db 0        ;digits for permutation check
 
 section .text
     extern printf
     global main
 
 main:
-    mov     byte [primes], 0        ;set primes[0] = 0
-    mov     byte [primes + 1], 0    ;set primes[1] = 0
-    mov     ebx, 1                  ;array index for outer loop
+    mov     ebx, 1          ;array index for outer loop
 
 sieve_outer:
-    inc     ebx                     ;increase index
-    mov     eax, ebx                ;copy to eax for squaring
-    mul     ebx                     ;square
-    cmp     eax, 10000              ;check if square is > limit    
-    jg      reset                   ;if it is, jump to reset
-    cmp     byte [primes + ebx], 0  ;check if ebx is no prime
-    je      sieve_outer             ;if no prime, try next number
+    inc     ebx             ;increase index
+    mov     eax, ebx        ;copy to eax for squaring
+    mul     ebx             ;square
+    cmp     eax, 10000      ;check if square is > limit    
+    jg      reset           ;if it is, jump to reset
+    bt      [primes], ebx   ;check if ebx is no prime
+    jnc     sieve_outer     ;if no prime, try next number
 
 sieve_inner:
-    mov     byte [primes + eax], 0  ;set multiple to not prime
-    add     eax, ebx                ;next multiple
-    cmp     eax, 10000              ;check if multiple is <= limit
-    jl      sieve_inner             ;if it is, continue with inner loop
-    jmp     sieve_outer             ;if not, continue with outer loop
+    btr     [primes], eax   ;set multiple to not prime
+    add     eax, ebx        ;next multiple
+    cmp     eax, 10000      ;check if multiple is <= limit
+    jl      sieve_inner     ;if it is, continue with inner loop
+    jmp     sieve_outer     ;if not, continue with outer loop
 
 reset:
-    mov     byte [primes + 1487], 0 ;primes[1487] = 0 to exclude the example
-    mov     rax, 1000               ;init rax
-    xor     rbx, rbx                ;and clear registers
+    mov     eax, 1487
+    btr     [primes], eax   ;primes[1487] = 0 to exclude the example
+    mov     rax, 1000       ;init rax
+    xor     rbx, rbx        ;and clear registers
     xor     rcx, rcx
     xor     rdi, rdi
 
 nextstarter:
-    inc     eax                     ;next starting number
-    cmp     byte [primes + eax], 1  ;is number prime?
-    jne     nextstarter             ;if not, try next
-    mov     ebx, eax                ;else set ebx
+    inc     eax             ;next starting number
+    bt      [primes], eax   ;is number prime?
+    jnc     nextstarter     ;if not, try next
+    mov     ebx, eax        ;else set ebx
 
 nextfollowers:
-    inc     ebx                     ;next second number
-    cmp     byte [primes + ebx], 1  ;is it prime?
-    jne     nextfollowers           ;if not, try next
-    mov     ecx, ebx                ;else put it in ecx
-    sub     ecx, eax                ;and subtract eax
-    add     ecx, ebx                ;add ebx to difference
-    cmp     ecx, 10000              ;result > 9999?
-    jge     nextstarter             ;if yes, try next starter
-    cmp     byte [primes + ecx], 1  ;is third number prime?
-    jne     nextfollowers           ;if not, try next second number
-    mov     r8d, eax                ;copy of eax to save it
-    xor     esi, esi                ;reset esi
+    inc     ebx             ;next second number
+    bt      [primes], ebx   ;is it prime?
+    jnc     nextfollowers   ;if not, try next
+    mov     ecx, ebx        ;else put it in ecx
+    sub     ecx, eax        ;and subtract eax
+    add     ecx, ebx        ;add ebx to difference
+    cmp     ecx, 10000      ;result > 9999?
+    jge     nextstarter     ;if yes, try next starter
+    bt      [primes], ecx   ;is third number prime?
+    jnc     nextfollowers   ;if not, try next second number
+    mov     r8d, eax        ;copy of eax to save it
+    xor     esi, esi        ;reset esi
 
 getdigits:
     mov     byte [digits + esi], 0  ;reset digits[edi]
