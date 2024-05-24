@@ -1,48 +1,46 @@
 section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
-    primes times 115000 db 1    ;array for the prime sieve
+    primes times 14375 db 255   ;array for the prime sieve
 
 section .text
     extern printf
     global main
 
 main:
-    mov     byte [primes], 0        ;set primes[0] = 0
-    mov     byte [primes + 1], 0    ;set primes[1] = 0
-    mov     ebx, 1                  ;array index for outer loop
+    mov     ebx, 1          ;array index for outer loop
 
 sieve_outer:
-    inc     ebx                     ;increase index
-    mov     eax, ebx                ;copy to eax for squaring
-    mul     ebx                     ;square
-    cmp     eax, 115000             ;check if square is > limit    
-    jg      reset                   ;if it is, jump to reset
-    cmp     byte [primes + ebx], 0  ;check if ebx is no prime
-    je      sieve_outer             ;if no prime, try next number
+    inc     ebx             ;increase index
+    mov     eax, ebx        ;copy to eax for squaring
+    mul     ebx             ;square
+    cmp     eax, 115000     ;check if square is > limit    
+    jg      reset           ;if it is, jump to reset
+    bt      [primes], ebx   ;check if ebx is no prime
+    je      sieve_outer     ;if no prime, try next number
 
 sieve_inner:
-    mov     byte [primes + eax], 0  ;set multiple to not prime
-    add     eax, ebx                ;next multiple
-    cmp     eax, 115000             ;check if multiple is <= limit
-    jl      sieve_inner             ;if it is, continue with inner loop
-    jmp     sieve_outer             ;if not, continue with outer loop
+    btr     [primes], eax   ;set multiple to not prime
+    add     eax, ebx        ;next multiple
+    cmp     eax, 115000     ;check if multiple is <= limit
+    jl      sieve_inner     ;if it is, continue with inner loop
+    jmp     sieve_outer     ;if not, continue with outer loop
 
-reset:                              ;reset registers for next operation
+reset:                      ;reset registers for next operation
+    mov     eax, 1
     xor     ebx, ebx
-    xor     ecx, ecx
-    xor     eax, eax
 
 find10001st:
-    inc     ebx                     ;increase array index
-    mov     al, [primes + ebx]      ;primes[ebx] in al
-    add     ecx, eax                ;add to ecx
-    cmp     ecx, 10001              ;check if counter arrived at 10001
-    jl      find10001st             ;if not, continue
+    inc     eax             ;increase array index
+    bt      [primes], eax   ;is it prime?
+    jnc     find10001st     ;if not, skip it
+    inc     ebx             ;else increase ecx
+    cmp     ebx, 10001      ;check if counter arrived at 10001
+    jl      find10001st     ;if not, continue
     
-print:                  ;printing routine, differs slightly from OS to OS
+print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, ebx
+    mov     esi, eax
     call    printf
     pop     rbp
 
