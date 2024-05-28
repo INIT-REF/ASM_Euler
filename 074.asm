@@ -54,7 +54,7 @@ findduplicates:
     jmp     digitfact                   ;and repeat with digit factorial sum
 
 noduplicates:
-    inc     esi                         ;else increase counter
+    inc     esi                         ;increase counter
     jmp     nextn                       ;and try next n
 
 
