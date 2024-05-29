@@ -51,7 +51,7 @@ gethash:
 
 buildup:
     mul     rsi
-    add     rax, rbx            ;else add gigit to hash
+    add     rax, rbx            ;else add digit to hash
     dec     rcx                 ;decrease digit count @rbx
     test    rcx, rcx            ;count reduced to 0?
     jnz     buildup             ;if not repeat
