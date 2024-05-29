@@ -79,7 +79,7 @@ nextcount:
     inc     rax                         ;next base
     cmp     byte [count + rax], 5       ;count for that base = 5?
     jne     nextcount                   ;if not, repeat
-    mov     rdi, rax                    ;if yes, get cube
+    mov     rdi, rax
     mul     rdi
     mul     rdi
 
