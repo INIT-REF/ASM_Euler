@@ -21,13 +21,9 @@ nextn:
     mov     rax, rdi        ;else move base in rax
     mul     rdi             ;square
     mul     rdi             ;cube
-    xor     rbx, rbx        ;reset rbx
-
-resetdig:
-    mov     byte [dig + rbx], 0 ;reset dig[rbx]
-    inc     rbx                 ;increase index
-    cmp     rbx, 10             ;end of dig?
-    jl      resetdig            ;if not, repeat
+    xor     rbx, rbx        ;reset rbx and clear dig
+    mov     [dig], rbx
+    mov     [dig + 2], rbx
 
 getdigits:
     xor     rdx, rdx            ;reset remainder
