@@ -60,7 +60,7 @@ buildup:
 
 scanhashes:
     inc     rbx                             ;next base
-    cmp     rbx, 10000                      ;end of hashes?
+    cmp     rbx, rdi                        ;all hashes up to rdi scanned?
     je      newhash                         ;if yes, set new hash in hashes
     cmp     qword [hashes + 8 * rbx], rax   ;hash already in hashes[rbx]?
     jne     scanhashes                      ;if not, repeat
