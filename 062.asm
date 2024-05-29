@@ -16,7 +16,7 @@ start:
 
 nextn:
     inc     rdi             ;next n
-    cmp     rdi, 10000      ;limit reached?
+    cmp     rdi, 5100;10000      ;limit reached?
     je      getresult       ;if yes, we are finished
     mov     rax, rdi        ;else move base in rax
     mul     rdi             ;square
