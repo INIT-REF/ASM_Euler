@@ -1,7 +1,7 @@
 section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
     abc times 10 db 0           ;digits in number
-    pds db "123456789", 1       ;pandigital string
+    pds db 0,1,1,1,1,1,1,1,1,1  ;pandigital string
 
 section .text
     extern printf
@@ -35,17 +35,14 @@ combine:
     add     esi, eax        ;add eax to esi
     cmp     esi, 987654321  ;result > 987654321?
     jg      next            ;if yes, try next number
-    push    rsi             ;else push result on the stack
     mov     eax, esi        ;put result in eax
     call    digits          ;get the digits in abc string
-    xor     esi, esi        ;reset counter
     call    cmpstr          ;compare abc with pds
-    cmp     esi, 10         ;if esi = 10, number is pandigital
-    pop     rsi             ;get number back from the stack
-    jne     multiply        ;if esi != 10, continue with multiplication
+    cmp     r9d, r11d       ;if r9d != r11d, number is pandigital
+    je      multiply        ;else continue with multiplication
 
 updatemax:
-    cmp     esi, r10d       ;if esi = 10, update max
+    cmp     esi, r10d       ;update max
     cmovg   r10d, esi
     jmp     next
 
@@ -62,31 +59,27 @@ exit:                       ;exit routine, dito
     syscall
 
 digits:
-    xor     esi, esi                ;reset esi, array index
-    
-resetabc:
-    mov     byte [abc + esi], 0     ;reset abc[esi] to 0
-    inc     esi                     ;next index
-    cmp     esi, 9                  ;end of abc?
-    jl      resetabc                ;if not, continue
+    xor     r8, r8          ;reset r8
+    mov     [abc], r8       ;clear abc
+    mov     [abc + 2], r8
 
 convert:
-    xor     edx, edx                    ;reset remainder
-    div     r11d                        ;divide by 10
-    mov     [abc + edx - 1], dl         ;put digit in abc string
-    add     byte [abc + edx - 1], '0'   ;add '0' to get the ASCII char
-    test    eax, eax                    ;number reduced to 0?
-    jnz     convert                     ;if not, continue
+    xor     edx, edx            ;reset remainder
+    div     r11d                ;divide by 10
+    lea     r8d, [abc + edx]    ;increase digit count in abc string
+    inc     byte [r8d]
+    test    eax, eax            ;number reduced to 0?
+    jnz     convert             ;if not, continue
     ret
 
 cmpstr:
-    mov     r8b, [abc + esi]    ;char @ abc[eax]
-    mov     r9b, [pds + esi]    ;char @ pds[eax]
-    inc     esi                 ;next char
-    cmp     r8b, r9b            ;both characters match?
-    je      cmpstr              ;if yes, continue
-
-back:
+    xor     r9d, r9d
+    mov     r8, [abc]           ;compare first 8 bytes
+    cmp     r8, [pds]
+    cmovne  r9d, r11d
+    mov     r8, [abc + 2]       ;compare last 8 bytes
+    cmp     r8, [pds + 2]
+    cmovne  r9d, r11d
     ret
 
 section .note.GNU-stack     ;just for gcc
