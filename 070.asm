@@ -3,7 +3,7 @@ format ELF64 executable 9
 segment readable
     limit equ 10000000          ;limit
     mult equ 10000000           ;multiplier for ratios
-    min equ  100000000000000     ;init max
+    min equ  100000000000000    ;init min
 
 segment readable writable
     result: times 10 db 0       ;empty string for printing the result later
