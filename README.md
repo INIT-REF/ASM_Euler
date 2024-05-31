@@ -1,18 +1,6 @@
-Just for fun and to get a better understanding about how CPUs work, I started to learn Assembly with NASM in FreeBSD. Solving Project Euler problems is one of my favourite ways to get familiar with a new programming language. It won't teach you how to write good software, but it is a great way to learn the syntax etc.
+Just for fun and to get a better understanding about how CPUs work, I started to learn Assembly with FreeBSD. Solving Project Euler problems is one of my favourite ways to get familiar with a new programming language. It won't teach you how to write good software, but it is a great way to learn the syntax etc.
 
-These solutions should compile and run as-is in FreeBSD 64bit using the following commands:
-
-`nasm -f elf64 <filename>.asm`
-
-`gcc <filename>.o -o <filename>`
-
-For debugging with gdb, you should replace the first command with:
-
-`nasm -f elf64 -g -F dwarf <filename>.asm`
-
-For Linux, you should be good to go by replacing the `1` in the exit syscall with `60` and adding a `-no-pie` option to the gcc command. No idea about Windows, sorry.
-
-
+Most solutions were done using NASM, but I switched to FASM later.
 
 ## Some comments about specific solutions:
 
