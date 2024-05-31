@@ -36,15 +36,12 @@ nextprime:
     bt      [primes], edi   ;is it prime?
     jnc     nextprime       ;if not, try next
     mov     eax, edi        ;prime in eax for divisions later
-    xor     esi, esi        ;reset index for clear_repd
-
-clear_repd:
-    mov     byte [repd + esi], 0    ;set repd[esi] to 0
-    inc     esi                     ;increase esi
-    cmp     esi, 10                 ;end of repd?
-    jl      clear_repd              ;if not, repeat
-    xor     edx, edx                ;reset remainder
-    div     esi                     ;divide by 10 (drop last digit)
+    xor     rsi, rsi        ;reset rsi for clearing repd
+    mov     [repd], rsi
+    mov     [repd + 2], rsi
+    mov     esi, 10         ;10 in esi for divisions
+    xor     edx, edx        ;reset remainder
+    div     esi             ;divide by 10 (drop last digit)
 
 get_repd:
     xor     edx, edx                ;reset remainder
