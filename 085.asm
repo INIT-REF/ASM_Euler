@@ -1,7 +1,7 @@
 format ELF64 executable 9
 
 segment readable
-    n equ 2000000
+    limit equ 2000000
 
 segment readable writable
     result: times 10 db 0       ;empty string for printing the result later
@@ -11,57 +11,46 @@ segment readable executable
     entry start
 
 start:
-    xor     eax, eax        ;width
-    mov     r8d, n          ;min difference
+    mov     edi, 2000       ;init width
+    mov     r8d, 1000       ;min difference (init from a 2000 x 1 grid)
     xor     r9d, r9d        ;area with min difference
 
 nextwidth:
-    inc     eax             ;increase width
-    cmp     eax, 2000
-    jg      finished
-    xor     ebx, ebx        ;height
+    dec     edi             ;decrease width
+    mov     eax, edi
+    inc     eax
+    mul     edi
+    shr     eax, 1          ;w * (w + 1) / 2
+    mov     ebx, eax        ;copy in ebx
+    mov     esi, 1          ;height
 
 nextheight:
-    inc     ebx             ;increase height
-    mov     edi, eax        ;copy in counters
-    mov     esi, ebx
-    xor     ecx, ecx        ;height count
-    xor     edx, edx        ;with count
+    inc     esi             ;increase height
+    cmp     esi, edi
+    jge     finished        ;if height = width, we are finished
+    mov     eax, esi
+    inc     eax
+    imul    esi
+    shr     eax, 1          ;h * (h + 1) / 2
+    imul    eax, ebx        ;rectangle count
+    push    rax
+    sub     eax, limit      ;get difference from limit
+    cmp     eax, 0
+    jg      pos_diff
+    neg     eax
 
-widthsum:                   ;get sum in w direction
-    add     ecx, edi
-    dec     edi
-    test    edi, edi
-    jnz     widthsum
+pos_diff:
+    cmp     eax, r8d        ;is difference less than current limit?
+    jg      no_new_min      ;if not, jump to no_new_min
+    mov     r8d, eax        ;else update r8d and r9d
+    mov     r9d, edi
+    imul    r9d, esi
 
-heightsum:                  ;get sum in h direction
-    add     edx, esi
-    dec     esi
-    test    esi, esi
-    jnz     heightsum
-
-    imul    ecx, edx        ;update min if applicable and continue
-    call    diff
-    cmp     edx, r8d
-    jg      nonewmin
-    mov     r8d, edx
-    mov     r9d, eax
-    imul    r9d, ebx
-
-nonewmin:
-    cmp     ecx, n
+no_new_min:
+    pop     rax
+    cmp     eax, limit
     jl      nextheight
     jmp     nextwidth
-
-diff:
-    mov     edx, ecx
-    sub     edx, n
-    cmp     edx, 0
-    jg      back
-    neg     edx
-
-back:
-    ret
 
 finished:
     mov     eax, r9d
