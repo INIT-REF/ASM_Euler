@@ -5,13 +5,13 @@ segment readable
     wm equ 80                   ;width of the matrix
     lm equ 6400                 ;length of the matrix array
     ld equ 40960000             ;length of the distance array (lm^2)
-    inf equ 1000000000          ;"infinity"
+    inf equ 100:bd0000000          ;"infinity"
 
 segment readable writable
     result: times 10 db 0       ;empty string for printing the result later
                      db 10, 0
     buf: rb 32000               ;buffer
-    mat: rd 6400                ;matrix
+    mat: rd lm                  ;matrix
     dis: rd ld                  ;distance matrix
 
 segment readable executable
