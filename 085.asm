@@ -20,7 +20,6 @@ nextwidth:
     mov     eax, edi
     inc     eax
     mul     edi
-    shr     eax, 1          ;w * (w + 1) / 2
     mov     ebx, eax        ;copy in ebx
     mov     esi, 1          ;height
 
@@ -30,9 +29,9 @@ nextheight:
     jge     finished        ;if height = width, we are finished
     mov     eax, esi
     inc     eax
-    imul    esi
-    shr     eax, 1          ;h * (h + 1) / 2
-    imul    eax, ebx        ;rectangle count
+    mul     esi
+    mul     ebx
+    shr     eax, 2          ;w * (w + 1) * h * (h + 1) / 4
     push    rax
     sub     eax, limit      ;get difference from limit
     cmp     eax, 0
