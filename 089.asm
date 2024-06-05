@@ -11,7 +11,6 @@ segment readable writable
     result: times 10 db 0       ;empty string for printing the result later
                      db 10, 0
     buf: rb 10000               ;buffer
-    nums: rd 1000               ;array for the numbers in int form
     curr: rb 16                 ;buffer for current number
 
 segment readable executable
@@ -35,7 +34,7 @@ start:
     xor     ecx, ecx    ;saved chars (result)
     mov     r8d, 10     ;for /mod 10
     mov     r10d, 1000  ;for /mod 1000
-    xor     r9d, r9d    ;index in nums
+    xor     r9d, r9d    ;index for nums
 
 readnext:
     cmp     r9d, 1000               ;1000 numbers done?
@@ -44,6 +43,7 @@ readnext:
     mov     [curr], rax
     mov     [curr + 8], rax
     xor     esi, esi                ;reset index for curr
+    xor     r11d, r11d
 
 readloop:
     mov     al, [buf + edi]         ;get char
@@ -62,18 +62,18 @@ getnum:
     mov     eax, [val + 4 * eax]    ;convert to int value
     cmp     eax, ebx                ;is value < last value
     jl      subtract                ;if yes, subtract it
-    add     [nums + 4 * r9d], eax   ;else add it
+    add     r11d, eax               ;else add it
     jmp     nextval
 
 subtract:
-    sub     [nums + 4 * r9d], eax
+    sub     r11d, eax
 
 nextval:
     mov     ebx, eax                ;update last value
     xor     eax, eax                ;clear eax
     test    esi, esi                ;repeat if index > 0
     jnz     getnum
-    mov     eax, [nums + 4 * r9d]   ;current number in eax
+    mov     eax, r11d               ;current number in eax
     xor     ebx, ebx                ;for opt length
     xor     edx, edx                ;get 1000s
     div     r10d
