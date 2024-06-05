@@ -10,8 +10,8 @@ segment readable executable
 start:
     mov     rdi, 2              ;x
     mov     rsi, 1              ;y
-    xor     r8, r8            ;result
-    mov     r9, 3              ;for mod 3
+    xor     r8, r8              ;result
+    mov     r9, 3               ;for mod 3
 
 getresult:                      ;start with the plus one case
     mov     rbx, rdi            ;get (2 * x) - 1
@@ -37,7 +37,7 @@ getresult:                      ;start with the plus one case
     test    rdx, rdx            ;(2 * x) - 1 mod 3 = 0?
     jnz     minus_1             ;if not, try minus one case
     inc     rbx                 ;add (2 * x) to result
-    add     r8, rbx            ;and add to result
+    add     r8, rbx             ;and add to result
     
 minus_1:
     mov     rbx, rdi            ;get (2 * x) + 1
