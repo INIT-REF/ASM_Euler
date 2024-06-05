@@ -20,7 +20,7 @@ getresult:
     jg      finished        ;if yes, we are finished    
     push    rbx             ;b and t on the stack
     push    rcx
-    imul    rbx, 3          ;b = (3 * b) + (2 * n) - 2
+    imul    rbx, 3          ;b = (3 * b) + (2 * t) - 2
     shl     rcx, 1
     add     rbx, rcx
     sub     rbx, 2
@@ -29,7 +29,7 @@ getresult:
     imul    rcx, 3
     shl     rax, 2
     add     rcx, rax
-    sub     rcx, 3          ;n = (3 * n) + (4 * b) - 3
+    sub     rcx, 3          ;t = (3 * t) + (4 * b) - 3
     jmp     getresult       ;repeat
 
 finished:
