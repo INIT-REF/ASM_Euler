@@ -41,7 +41,7 @@ convert_result:
     xor     rdx, rdx
     div     rbx
     add     rdx, '0'
-    mov     [result + ecx], dl
+    mov     [result + rcx], dl
     dec     rcx
     test    rax, rax
     jnz     convert_result
