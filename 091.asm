@@ -28,14 +28,14 @@ next_b:
     xor     edx, edx
     div     edi             ;divide by a        
     pop     rbx             ;gcd back from the stack
-    push    rax             ;put prior result un the stack
+    push    rax             ;put prior result on the stack
     mov     eax, 50
     sub     eax, edi        ;50 - a
     mul     ebx
     xor     edx, edx
     div     esi             ;(50 - a) * gcd(a, b) / b
     pop     rbx             ;prior result in ebx
-    cmp     eax, ebx        ;get minimum of eax and r8d
+    cmp     eax, ebx        ;get minimum of eax and ebx
     cmovg   eax, ebx        ;and put it in eax
     shl     eax, 1          ;double that
     add     ecx, eax        ;and add to count
