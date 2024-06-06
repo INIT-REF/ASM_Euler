@@ -14,7 +14,7 @@ main:
 
 countup:
     add     eax, ebx                ;add current number to result
-    add     ebx, [steps + ecx * 4]  ;add steps@ecx to current number
+    add     ebx, [steps + 4 * ecx]  ;add steps@ecx to current number
     inc     ecx                     ;increase the array index
     cmp     ecx, 7                  ;check if end of steps
     cmove   ecx, edx                ;if yes, zero ecx
