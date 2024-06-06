@@ -1,6 +1,6 @@
 section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
-    primes times 14375 db 255   ;array for the prime sieve
+    primes times 14375 db 255   ;N * (ln N + ln(ln N)) bits, rounded up
 
 section .text
     extern printf
@@ -42,7 +42,7 @@ print:                      ;printing routine, differs slightly from OS to OS
     call    printf
     pop     rbp
 
-exit:                   ;exit routine, dito
+exit:                       ;exit routine, dito
     mov     eax, 1
     xor     edi, edi
     syscall
