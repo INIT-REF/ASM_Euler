@@ -8,15 +8,17 @@ section .text
 
 main:
     mov     ebx, 1          ;array index for outer loop
+    xor     ecx, ecx        ;counter
 
 sieve_outer:
     inc     ebx             ;increase index
     mov     eax, ebx        ;copy to eax for squaring
     mul     ebx             ;square
     cmp     eax, 115000     ;check if square is > limit    
-    jg      reset           ;if it is, jump to reset
+    jg      find10001st     ;if it is, sieve is done
     bt      [primes], ebx   ;check if ebx is no prime
     jnc     sieve_outer     ;if no prime, try next number
+    inc     ecx             ;else increase counter
 
 sieve_inner:
     btr     [primes], eax   ;set multiple to not prime
@@ -25,22 +27,18 @@ sieve_inner:
     jl      sieve_inner     ;if it is, continue with inner loop
     jmp     sieve_outer     ;if not, continue with outer loop
 
-reset:                      ;reset registers for next operation
-    mov     eax, 1
-    xor     ebx, ebx
-
 find10001st:
-    inc     eax             ;increase array index
-    bt      [primes], eax   ;is it prime?
+    inc     ebx             ;increase array index
+    bt      [primes], ebx   ;is it prime?
     jnc     find10001st     ;if not, skip it
-    inc     ebx             ;else increase ecx
-    cmp     ebx, 10001      ;check if counter arrived at 10001
+    inc     ecx             ;else increase ecx
+    cmp     ecx, 10001      ;check if counter arrived at 10001
     jl      find10001st     ;if not, continue
     
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, eax
+    mov     esi, ebx
     call    printf
     pop     rbp
 
