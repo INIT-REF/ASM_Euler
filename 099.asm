@@ -73,9 +73,8 @@ exp_done:
     fild    dword [base]
     fyl2x
     fisttp  dword [res]
-    mov     eax, [res]          ;truncated result in eax
-    cmp     eax, r8d            ;result > current max?
-    cmovg   r8d, eax            ;if yes, update max and max line number
+    cmp     [res], r8d          ;result > current max?
+    cmovg   r8d, [res]          ;if yes, update max and max line number
     cmovg   r9d, esi
     inc     esi                 ;next line
     cmp     esi, 1000           ;finished?
