@@ -29,7 +29,7 @@ It is sufficient to truncate the numbers to the first 11 digits to get the resul
 This boils down to an "n choose k" problem, with n being twice the grid width and k being the width, so "40 choose 20". We can then use the [Muliplicative Formula](https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula) to compute the result without needing to calculate factorials.
 
 ### 016
-I use an array representation of the number and compute each power digit by digit.
+I use an array representation of the number, and split it in chunks of 18-digits, so 17 qwords are needed. It's a bit more efficient than using a byte array with 302 single digits.
 
 ### 017
 I left that one more or less uncommented. It's just what can be done with pen and paper or a calculator and builds the sum in loops according to how many times a number is used below 1000.
