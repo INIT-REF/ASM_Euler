@@ -1,7 +1,7 @@
 format ELF64 executable 9
 
 segment readable
-    e18 equ 100000000000000000  ;1e17 for 17-digit chunks
+    e17 equ 100000000000000000  ;1e17 for 17-digit chunks
 
 segment readable writable
     result: times 10 db 0       ;empty string for printing the result later
@@ -13,7 +13,7 @@ segment readable executable
     entry start
 
 start:
-    mov     r9, e18             ;1e18 in r9
+    mov     r9, e17             ;1e17 in r9
     mov     rax, 8              ;init prev/curr to 8/11
     mov     [prev + 24], rax
     mov     rax, 11
@@ -55,7 +55,7 @@ _loop:
     jl      next_conv               ;if not, get next
 
 digit_sum:
-    mov     r8d, 4                  ;get sum of digits and print result
+    mov     r8d, 4
     xor     ebx, ebx
     mov     r9, 10
 
