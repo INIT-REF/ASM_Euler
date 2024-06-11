@@ -1,8 +1,5 @@
 format ELF64 executable 9
 
-segment readable
-    plimit equ 1000000              ;1e6, limit for the sieve
-
 segment readable writable
     result: times 20 db 0           ;empty string for printing the result later
                      db 10, 0
