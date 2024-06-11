@@ -6,7 +6,7 @@ segment readable
 segment readable writable
     result: times 20 db 0       ;empty string for printing the result later
                      db 10, 0
-    nom rq 25                   ;"BigInt" buffer for numerator 1600 Bits
+    num rq 25                   ;"BigInt" buffer for numerator 1600 Bits
     den rq 25                   ;dito for denominator
 
 segment readable executable
@@ -14,7 +14,7 @@ segment readable executable
 
 start:
     mov     r8, e16             ;1e16 in r8
-    mov     [nom + 8 * 24], 1   ;init nom/den to 1
+    mov     [num + 8 * 24], 1   ;init nom/den to 1
     mov     [den + 8 * 24], 1
     mov     edi, 1              ;init i
     xor     r11d, r11d          ;counter (result)
@@ -30,14 +30,14 @@ next_conv:
 conv_loop:
     dec     esi                     ;decrease index
     mov     rax, [den + 8 * esi]    ;current nom/den in rax/rbx
-    mov     rbx, [nom + 8 * esi]
+    mov     rbx, [num + 8 * esi]
     add     rbx, rax                ;den + nom for later
     shl     rax, 1                  ;den * 2
     add     rax, r9                 ;add carry
-    add     rax, [nom + 8 * esi]    ;add nom
+    add     rax, [num + 8 * esi]    ;add nom
     xor     rdx, rdx
     div     r8
-    mov     [nom + 8 * esi], rdx    ;nom %= 1e16
+    mov     [num + 8 * esi], rdx    ;nom %= 1e16
     mov     r9, rax                 ;rest in carry
     mov     rax, rbx                ;old nom + den in rax
     add     rax, r10                ;add carry
@@ -51,11 +51,11 @@ conv_loop:
 
 get_first_sig:
     dec     esi                     ;decrease esi until nom[esi] is 0
-    mov     rax, [nom + 8 * esi]
+    mov     rax, [num + 8 * esi]
     test    rax, rax
     jnz     get_first_sig
     inc     esi                     ;increase esi again
-    mov     rax, [nom + 8 * esi]    ;get first digits of nom
+    mov     rax, [num + 8 * esi]    ;get first digits of nom
     mov     rbx, [den + 8 * esi]    ;dito for den
     test    rbx, rbx                ;is den[esi] = 0
     jz      count                   ;then increase counter
