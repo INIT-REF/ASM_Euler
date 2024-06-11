@@ -6,7 +6,7 @@ segment readable
 segment readable writable
     result: times 20 db 0       ;empty string for printing the result later
                      db 10, 0
-    nom rq 25                   ;"BigInt" buffer for numerator 1536 Bits
+    nom rq 25                   ;"BigInt" buffer for numerator 1600 Bits
     den rq 25                   ;dito for denominator
 
 segment readable executable
