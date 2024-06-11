@@ -1,19 +1,18 @@
 format ELF64 executable 9
 
 segment readable
-    plimit equ 1000000000           ;1e9, limit for the sieve
+    plimit equ 1000000              ;1e6, limit for the sieve
 
 segment readable writable
     result: times 20 db 0           ;empty string for printing the result later
                      db 10, 0
-    sieve: times 125000000 db 255   ;prime sieve, 1e9 bits
+    sieve: times 125000 db 255      ;prime sieve, 1e6 bits
 
 segment readable executable
     entry start
 
 start:
     mov     ebx, 1          ;array index for outer loop
-    xor     ecx, ecx        ;counter
 
 sieve_outer:
     inc     ebx             ;increase index
@@ -43,8 +42,11 @@ next_layer:
 layer_loop:
     dec     esi             ;decrease loop counter
     add     eax, edi        ;add difference to eax
-    bt      [sieve], eax    ;is it prime?
-    jnc     no_prime
+    push    rax
+    call    is_prime        ;is it prime
+    pop     rax
+    test    ecx, ecx
+    jz      no_prime
     inc     ebx             ;if yes, increase count
 
 no_prime:
@@ -92,3 +94,29 @@ exit:
     mov     eax, 1
     xor     edi, edi
     syscall
+
+is_prime:
+    mov     ecx, 1
+    mov     r8d, eax
+    mov     r9d, 1
+    
+inc_div:
+    inc     r9d
+    bt      [sieve], r9d
+    jnc     inc_div
+    mov     eax, r9d
+    mul     r9d
+    cmp     eax, r8d
+    jg      back
+
+divide:
+    mov     eax, r8d
+    xor     edx, edx
+    div     r9d
+    test    edx, edx
+    jnz     inc_div
+    xor     ecx, ecx
+
+back:
+    ret
+
