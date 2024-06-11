@@ -43,17 +43,17 @@ phi_inner:
 reset:
     mov     edi, 1                  ;init n
     xor     ebx, ebx                ;n with max n/phi(n) ratio
-    xor     rcx, rcx                ;max n/phi(n) ratio
+    xor     ecx, ecx                ;max n/phi(n) ratio
 
 nextn:
     inc     edi                     ;next n
     mov     eax, edi                ;copy in eax
-    shl     rax, 10                 ;multiply by 1024 to get more accuracy
+    shl     eax, 10                 ;multiply by 1024 to get more accuracy
     mov     esi, [phi + 4 * edi]    ;phi(n) in esi
-    xor     rdx, rdx
-    div     rsi                     ;get ratio
-    cmp     rcx, rax                ;max < ratio?
-    cmovl   rcx, rax                ;if yes, update max
+    xor     edx, edx
+    div     esi                     ;get ratio
+    cmp     ecx, eax                ;max < ratio?
+    cmovl   ecx, eax                ;if yes, update max
     cmovl   ebx, edi                ;and max n
     cmp     edi, limit              ;continue until limit is reached
     jl      nextn
