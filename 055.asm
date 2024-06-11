@@ -49,7 +49,7 @@ reverse_loop:
     jnz     reverse_loop
     ret
 
-finished:                       ;convert count to strin, print and exit
+finished:                       ;convert count to string, print and exit
     mov     eax, r8d
     mov     ebx, 10
     mov     ecx, 19
