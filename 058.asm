@@ -19,6 +19,8 @@ next_layer:
 layer_loop:
     dec     esi             ;decrease loop counter
     add     eax, edi        ;add difference to eax
+    test    esi, esi
+    jz      done            ;skip last number (is always square)
     push    rax
     call    is_prime        ;is it prime
     pop     rax
@@ -29,6 +31,8 @@ layer_loop:
 no_prime:
     test    esi, esi        ;loop counter > 0?
     jnz     layer_loop      ;if yes, repeat
+
+done:
     push    rax             ;else save rax and rbx on the stack
     push    rbx
 
