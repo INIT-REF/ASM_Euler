@@ -14,7 +14,7 @@ segment readable executable
 
 start:
     mov     r8, e16             ;1e16 in r8
-    mov     [num + 8 * 24], 1   ;init nom/den to 1
+    mov     [num + 8 * 24], 1   ;init num/den to 1
     mov     [den + 8 * 24], 1
     mov     edi, 1              ;init i
     xor     r11d, r11d          ;counter (result)
@@ -24,22 +24,22 @@ next_conv:
     cmp     edi, 1000           ;finished?
     je      finished
     mov     esi, 25             ;end of array
-    xor     r9, r9              ;nom carry
+    xor     r9, r9              ;num carry
     xor     r10, r10            ;den carry
 
 conv_loop:
     dec     esi                     ;decrease index
-    mov     rax, [den + 8 * esi]    ;current nom/den in rax/rbx
+    mov     rax, [den + 8 * esi]    ;current num/den in rax/rbx
     mov     rbx, [num + 8 * esi]
-    add     rbx, rax                ;den + nom for later
+    add     rbx, rax                ;den + num for later
     shl     rax, 1                  ;den * 2
     add     rax, r9                 ;add carry
-    add     rax, [num + 8 * esi]    ;add nom
+    add     rax, [num + 8 * esi]    ;add num
     xor     rdx, rdx
     div     r8
-    mov     [num + 8 * esi], rdx    ;nom %= 1e16
+    mov     [num + 8 * esi], rdx    ;num %= 1e16
     mov     r9, rax                 ;rest in carry
-    mov     rax, rbx                ;old nom + den in rax
+    mov     rax, rbx                ;old num + den in rax
     add     rax, r10                ;add carry
     xor     rdx, rdx
     div     r8
@@ -50,12 +50,12 @@ conv_loop:
     mov     esi, 25                 ;reset index
 
 get_first_sig:
-    dec     esi                     ;decrease esi until nom[esi] is 0
+    dec     esi                     ;decrease esi until num[esi] is 0
     mov     rax, [num + 8 * esi]
     test    rax, rax
     jnz     get_first_sig
     inc     esi                     ;increase esi again
-    mov     rax, [num + 8 * esi]    ;get first digits of nom
+    mov     rax, [num + 8 * esi]    ;get first digits of num
     mov     rbx, [den + 8 * esi]    ;dito for den
     test    rbx, rbx                ;is den[esi] = 0
     jz      count                   ;then increase counter
@@ -63,14 +63,14 @@ get_first_sig:
 
 get_length:
     xor     rdx, rdx                ;reset remainder
-    div     rcx                     ;divide nom[esi] by 10
+    div     rcx                     ;divide num[esi] by 10
     xchg    rax, rbx                ;exchange rax and rbx
     xor     rdx, rdx                ;reset remainder again
     div     rcx                     ;divide den[esi] by 10
     xchg    rax, rbx                ;exchange rax/rbx to original
     test    rbx, rbx                ;den[esi] reduced to 0?
     jnz     get_length              ;if not, repeat
-    test    rax, rax                ;is nom[esi] still > 0 (= had more digits)
+    test    rax, rax                ;is num[esi] still > 0 (= had more digits)
     jz      next_conv               ;if not, get next convergent
 
 count:
