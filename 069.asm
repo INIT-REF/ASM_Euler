@@ -48,7 +48,7 @@ reset:
 nextn:
     inc     edi                     ;next n
     mov     eax, edi                ;copy in eax
-    shl     eax, 10                 ;multiply by 1024 to get more accuracy
+    shl     rax, 10                 ;multiply by 1024 to get more accuracy
     mov     esi, [phi + 4 * edi]    ;phi(n) in esi
     xor     rdx, rdx
     div     rsi                     ;get ratio
