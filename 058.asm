@@ -6,31 +6,11 @@ segment readable
 segment readable writable
     result: times 20 db 0           ;empty string for printing the result later
                      db 10, 0
-    sieve: times 125000 db 255      ;prime sieve, 1e6 bits
 
 segment readable executable
     entry start
 
 start:
-    mov     ebx, 1          ;array index for outer loop
-
-sieve_outer:
-    inc     ebx             ;increase index
-    mov     eax, ebx        ;copy to eax for squaring
-    mul     ebx             ;square
-    cmp     eax, plimit     ;check if square is > limit    
-    jg      reset           ;if it is, sieve is done
-    bt      [sieve], ebx    ;check if ebx is no prime
-    jnc     sieve_outer     ;if no prime, try next number
-
-sieve_inner:
-    btr     [sieve], eax    ;set multiple to not prime
-    add     eax, ebx        ;next multiple
-    cmp     eax, plimit     ;check if multiple is <= limit
-    jl      sieve_inner     ;if it is, continue with inner loop
-    jmp     sieve_outer     ;if not, continue with outer loop
-
-reset:
     mov     eax, 1          ;number on the diagonal
     xor     ebx, ebx        ;counter
     xor     edi, edi        ;difference between numbers on the diagonal
@@ -97,13 +77,13 @@ exit:
 
 is_prime:
     mov     ecx, 1
+    test    eax, 1
+    jz      not_prime
     mov     r8d, eax
     mov     r9d, 1
     
 inc_div:
-    inc     r9d
-    bt      [sieve], r9d
-    jnc     inc_div
+    add     r9d, 2
     mov     eax, r9d
     mul     r9d
     cmp     eax, r8d
@@ -115,6 +95,8 @@ divide:
     div     r9d
     test    edx, edx
     jnz     inc_div
+
+not_prime:
     xor     ecx, ecx
 
 back:
