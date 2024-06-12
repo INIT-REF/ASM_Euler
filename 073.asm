@@ -12,7 +12,7 @@ start:
     mov     ecx, 2              ;d = 2 (denominator of 1/2)
 
 get_next_frac:
-    mov     edi, ecx            ;calculate median q = (c + d)
+    mov     edi, ecx            ;calculate mediant q = (c + d)
     add     ecx, ebx            ;while q <= 12000
     cmp     ecx, 12000
     jle     get_next_frac
