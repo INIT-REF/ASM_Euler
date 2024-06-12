@@ -16,7 +16,7 @@ next_permutation:
     inc     eax
     mov     edi, 9
 
-get_pivot:                          ;find first number > right neighbur
+get_pivot:                          ;find first number > right neighbour
     dec     edi
     mov     bl, [string + edi]
     cmp     bl, [string + edi + 1]
