@@ -8,16 +8,14 @@ segment readable executable
     entry start
 
 start:
-    mov     eax, 2              ;init a/b and c/d (2/5 and 3/7)
+    mov     eax, 2              ;init a/b to 2/5
     mov     ebx, 5
-    mov     ecx, 3
-    mov     edx, 7
 
 get_next:
     mov     edi, eax            ;old a = result
-    add     eax, ecx            ;new a = a + c
-    add     ebx, edx            ;new b = b + d
-    cmp     ebx, 1000000
+    add     eax, 3              ;new a = a + numerator to the right
+    add     ebx, 7              ;new b = b + denominator to the right
+    cmp     ebx, 1000000        ;if b >= 1e6 we are finished
     jl      get_next
     
 finished:
