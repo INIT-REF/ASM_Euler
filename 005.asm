@@ -15,7 +15,7 @@ next:
     push    rax
 
 gcd:
-    xchg    eax, ebx        ;get gcd(m, n), result in ebx
+    xchg    eax, ebx    ;get gcd(m, n), result in ebx
     xor     edx, edx
     div     ebx
     mov     eax, edx
