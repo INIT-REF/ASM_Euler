@@ -24,6 +24,7 @@ gcd:
 
 lcm:
     pop     rax         ;get original number 1 from the stack
+    xor     edx, edx
     div     ebx         ;divide by gcd
     pop     rbx         ;get original number 2 from the stack
     mul     ebx         ;multiply
