@@ -44,7 +44,7 @@ _loop:
     bts     r9d, edx        ;set bit @ remainder
     test    eax, eax        ;number reduced to 0?
     jnz     _loop           ;if not, repeat
-    cmp     r9d, 1022       ;if r8d = 1022, number is pandigital
+    cmp     r9d, 1022       ;if r8d = 1022, number is 1-9 pandigital
     jne     multiply        ;else continue with multiplication
     cmp     esi, r8d        ;update max
     cmovg   r8d, esi
