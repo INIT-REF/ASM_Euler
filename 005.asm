@@ -14,24 +14,13 @@ next:
     push    rbx         ;push both numbers on the stack for LCM later
     push    rax
 
-gcd_start:
-    cmp     eax, ebx    ;check if eax > ebx
-    jg      gcd_mod     ;if yes, jump to the gcd loop
-    xchg    ebx, eax    ;if not, exchange both numbers
-    
-gcd_mod:
-    test    eax, eax    ;if eax or ebx are 0, go to gcd
-    jz      gcd
-    test    ebx, ebx
-    jz      gcd
-    xor     edx, edx    ;prepare rdx for the remainder    
-    div     ebx         ;divide by the smaller number
-    mov     eax, edx    ;replace bigger number with remainder
-    jmp     gcd_start   ;back to the start with the new numbers
-
 gcd:
-    test    eax, eax    ;check if eax is zero
-    cmovnz  ebx, eax    ;if not, replace ebx with eax (as ebx was zero)
+    xchg    eax, ebx        ;get gcd(m, n), result in ebx
+    xor     edx, edx
+    div     ebx
+    mov     eax, edx
+    test    eax, eax
+    jnz     gcd
 
 lcm:
     pop     rax         ;get original number 1 from the stack
