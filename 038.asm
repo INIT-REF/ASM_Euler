@@ -33,6 +33,8 @@ combine:
     add     esi, eax        ;add eax to esi
     cmp     esi, 987654321  ;result > 987654321?
     jg      next            ;if yes, try next number
+    cmp     esi, 123456789  ;result < 123456789
+    jl      next            ;dito
     mov     eax, esi        ;put result in eax
     xor     r9d, r9d        ;reset r9d
     
