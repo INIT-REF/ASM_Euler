@@ -1,6 +1,5 @@
 section .data
-    msg db "%.10s", 10, 0   ;return string for printf (just the result)
-    ans times 20 db 0       ;string for truncated result
+    msg db "%lld", 10, 0    ;return string for printf (just the result)
     numbers dq 37107287533, 46376937677, 74324986199, 91942213363
             dq 23067588207, 89261670696, 28112879812, 44274228917
             dq 47451445736, 70386486105, 62176457141, 64906352462
@@ -40,23 +39,19 @@ sum:
     add     rax, [numbers + 8 * ebx]    ;add to sum
     cmp     ebx, 99                     ;check if end of array
     jl      sum                         ;if not, continue summing
-    mov     ebx, 19                     ;set ebx to end of ans
-    mov     ecx, 10                     ;set ecx to 10 for divisions
+    mov     rbx, 100000000000           ;1e11 for length check
+    mov     rcx, 10                     ;10 for divisions
 
-convert:
-    xor     rdx, rdx                ;reset remainder
-    div     rcx                     ;divide by 10
-    add     rdx, '0'                ;get the ASCII value of the remainder
-    mov     [ans + ebx], dl         ;put it in ans
-    dec     ebx                     ;decrease index
-    test    rax, rax                ;check if number has arrived at 0
-    jnz     convert                 ;if not, repeat
-    lea     eax, [ans + ebx + 1]    ;else pointer to first digit in eax
+reduce:
+    xor     rdx, rdx                    ;reset remainder
+    div     rcx                         ;divide by 10
+    cmp     rax, rbx                    ;still >= 1e11?
+    jge     reduce                      ;if yes, repeat
 
 print:                  ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, eax
+    mov     rsi, rax
     call    printf
     pop     rbp
 
