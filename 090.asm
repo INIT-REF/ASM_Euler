@@ -64,14 +64,14 @@ _loop:
     adc     r11d, 0                     ;if yes, set bit 0 in r11d
     cmp     r11d, 3                     ;is r11d 3 (binary 11)?
     je      valid                       ;if yes, we have a valid solution
-    ;xor     r11d, r11d
-    ;bt      ecx, eax                    ;do the same with switched dies
-    ;setc    r11b
-    ;shl     r11d, 1
-    ;bt      ebx, edx
-    ;adc     r11d, 0
-    ;cmp     r11d, 3
-    ;jne     not_valid
+    xor     r11d, r11d
+    bt      ecx, eax                    ;do the same with switched dies
+    setc    r11b
+    shl     r11d, 1
+    bt      ebx, edx
+    adc     r11d, 0
+    cmp     r11d, 3
+    jne     not_valid
 
 valid:
     xor     r11d, r11d                  ;reset r11d and try next square
