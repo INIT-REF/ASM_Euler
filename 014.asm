@@ -17,8 +17,6 @@ collatz:
     je      print           ;if yes, print result
     mov     rax, rbx        ;copy number to rax
     xor     r8d, r8d        ;reset chain length
-    call    even            ;compute the sequence
-    jmp     collatz         ;repeat
 
 even:
     cmp     rax, 1000000            ;check if current number < 1000000
@@ -50,7 +48,7 @@ updatemax:
     cmp     r8d, r9d                ;check if current length > max
     cmovg   r9d, r8d                ;if yes update max length
     cmovg   r10d, ebx               ;update number of max length
-    ret
+    jmp     collatz
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
