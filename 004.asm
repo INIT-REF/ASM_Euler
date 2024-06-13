@@ -41,8 +41,7 @@ ispalindrome:
     cmp     ebx, eax        ;check if reverse = product
     jne     nextproduct     ;if not, continue with the next product
     cmp     ebx, r8d        ;if yes, check if it is greater than current max
-    jle     nextproduct     ;if lower, continue with next product
-    mov     r8d, ebx        ;if greater, put it in max
+    cmovg   r8d, ebx        ;if greater, put it in max
     jmp     nextproduct     ;and continue with next product
 
 print:                      ;printing routine, differs slightly from OS to OS
