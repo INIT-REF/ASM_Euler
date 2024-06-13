@@ -44,7 +44,7 @@ _loop:
     jnz     _loop           ;if not, repeat
     cmp     r9d, 1022       ;if r8d = 1022, number is pandigital
     jne     multiply        ;else continue with multiplication
-    cmp     esi, r8d       ;update max
+    cmp     esi, r8d        ;update max
     cmovg   r8d, esi
     jmp     next
 
