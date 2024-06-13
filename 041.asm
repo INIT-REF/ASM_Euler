@@ -1,7 +1,5 @@
 section .data
     msg db "%d", 10, 0  ;return string for printf (just the result)
-    abc times 9 db 0    ;digits in number
-    pds db "1234567", 1 ;pandigital string
 
 section .text
     extern printf
@@ -30,16 +28,24 @@ primetest:
 
 isprime:
     mov     eax, ebx    ;number in eax
-    push    rax         ;put number on the stack
-    call    digits      ;digits in abc and compare with pds
-    pop     rax         ;get number back
-    cmp     esi, 8      ;is abc 1-7 pandigital?
-    jl      next        ;if not, try next prime
+    xor     ecx, ecx    ;for bit test
+    xor     r8d, r8d    ;dito
+
+pd_test:
+    bts     r8d, 0      ;set bit @0 in r8d
+    shl     r8d, 1      ;shift r8d left
+    xor     edx, edx    ;reset remainder
+    div     edi
+    bts     ecx, edx    ;set bit @remainder in ecx
+    test    eax, eax    ;number reduced to 0?
+    jnz     pd_test     ;if not repeat
+    cmp     ecx, r8d    ;ecx = r8d --> 1-n pandigital
+    jne     next        ;if not, try next prime
 
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, eax
+    mov     esi, ebx
     call    printf
     pop     rbp
 
@@ -47,31 +53,5 @@ exit:                       ;exit routine, dito
     mov     eax, 1
     xor     edi, edi
     syscall
-
-digits:
-    xor     esi, esi                ;reset esi, array index
-    
-resetabc:
-    mov     byte [abc + esi], 0     ;reset abc[esi] to 0
-    inc     esi                     ;next index
-    cmp     esi, 8                  ;end of abc?
-    jl      resetabc                ;if not, continue
-
-convert:
-    xor     edx, edx                    ;reset remainder
-    div     edi                         ;divide by 10
-    mov     [abc + edx - 1], dl         ;put digit in abc string
-    add     byte [abc + edx - 1], '0'   ;add '0' to get the ASCII char
-    test    eax, eax                    ;number reduced to 0?
-    jnz     convert                     ;if not, continue
-    xor     esi, esi                    ;reset esi
-
-cmpstr:
-    mov     r8b, [abc + esi]    ;char @ abc[eax]
-    mov     r9b, [pds + esi]    ;char @ pds[eax]
-    inc     esi                 ;next char
-    cmp     r8b, r9b            ;both characters match?
-    je      cmpstr              ;if yes, continue
-    ret
 
 section .note.GNU-stack     ;just for gcc
