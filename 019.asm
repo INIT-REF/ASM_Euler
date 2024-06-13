@@ -10,8 +10,7 @@ main:
     mov     ebx, 1900       ;year (to be increased soon)
     mov     edi, 2          ;1901/01/01 was a Tuesday
     mov     esi, 1          ;day in month counter
-    mov     r8d, 4          ;for leap year divisions
-    xor     r9d, r9d        ;sum
+    xor     r8d, r8d        ;sum
 
 nextyear:
     mov     ecx, 1              ;set month to January
@@ -19,11 +18,9 @@ nextyear:
     cmp     ebx, 2001           ;check if we are finished
     je      print               ;if yes, print result
     mov     dword [dim + 8], 28 ;reset febuary
-    xor     edx, edx            ;reset remainder
-    mov     eax, ebx            ;year in eax
-    div     r8d                 ;divide by 4
-    test    edx, edx            ;check remainder
-    jnz     count               ;if not zero go to count
+    bsr     eax, ebx            ;year divisible by 4 when last two bits are 0
+    cmp     eax, 2              ;result 2?
+    jne     count               ;if not, go to count
     mov     dword [dim + 8], 29 ;if zero, set febuary to 29 days
 
 count:
@@ -31,7 +28,7 @@ count:
     jne     continue            ;if not, continue
     cmp     edi, 7              ;check if it is Sunday
     jne     continue            ;if not, continue
-    inc     r9d                 ;else increase count
+    inc     r8d                 ;else increase count
 
 continue:
     inc     edi                 ;increase weekday
@@ -61,7 +58,7 @@ back:
 print:                      ;printing routine, differs slightly from OS to OS
     push    rbp
     mov     edi, msg
-    mov     esi, r9d
+    mov     esi, r8d
     call    printf
     pop     rbp
 
