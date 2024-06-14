@@ -3,33 +3,57 @@ format ELF64 executable 9
 segment readable writable
     result: times 20 db 0       ;empty string for printing the result later
                      db 10, 0
-    p: rd 101
+    p: rd 100000
 
 segment readable executable
     entry start
 
 start:
-    mov     dword [p], 1        ;set p[0] to 1
+    mov     dword [p], 1        ;p[0] = 1
     xor     edi, edi            ;init n
 
-sum_outer:
+next_n:
     inc     edi                 ;n++
-    mov     esi, edi            ;m = n                
+    xor     esi, esi            ;init m
+    mov     ebx, 1              ;init gpn(n) (generalized pentagonal number)
 
-sum_inner:
-    push    rsi
-    sub     esi, edi                ;m - n
-    mov     eax, [p + 4 * esi]      ;p[m - n]
-    pop     rsi
-    add     [p + 4 * esi], eax      ;p[m] += p[m - n]
-    inc     esi                     ;m++
-    cmp     esi, 100                ;end of p?
-    jle     sum_inner               ;if not, continue inner loop
-    cmp     edi, 99
-    jl      sum_outer
+p_loop:
+    mov     eax, [p + 4 * edi]  ;p[n]
+    mov     ecx, edi
+    sub     ecx, ebx            ;n - gpn(m)
+    mov     ebx, [p + 4 * ecx]  ;p[n - gpn(m)]
+    test    esi, 2              ;m mod 4 > 1?
+    jz      continue            ;if not, jump to continue
+    neg     ebx                 ;else negate ebx
+
+continue:
+    add     eax, ebx            ;p[n] +/- p[n - gpn(m)]
+    mov     ebx, 1000000
+    cdq
+    idiv    ebx
+    mov     [p + 4 * edi], edx  ;result mod 1e6 in p[n]
+    inc     esi                 ;m++
+    mov     eax, esi            ;get new gpn(m):
+    shr     eax, 1
+    inc     eax                 ;k = (m / 2) + 1
+    mov     ebx, eax
+    imul    ebx, ebx
+    imul    ebx, 3              ;3 * k * k
+    test    esi, 1              ;m even?
+    jnz     odd                 ;if not, jump to odd
+    neg     eax                 ;if yes, negate eax
+
+odd:
+    add     ebx, eax
+    shr     ebx, 1              ;gpn(m) = ((3 * k * k) +/- k) / 2
+    cmp     ebx, edi
+    jle     p_loop
+    mov     eax, [p + 4 * edi]  ;p[n] = 0 (i. e. p[n] was divisible by 1e6)?
+    test    eax, eax
+    jnz     next_n              ;if not, continue with next n
 
 finished:
-    mov     eax, [p + 400]          ;result in p[100]
+    mov     eax, edi
     mov     ebx, 10
     mov     ecx, 19
 
