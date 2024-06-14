@@ -52,7 +52,7 @@ odd:
     test    eax, eax
     jnz     next_n              ;if not, continue with next n
 
-finished:
+finished:                       ;convert result to string, print and exit
     mov     eax, edi
     mov     ebx, 10
     mov     ecx, 19
