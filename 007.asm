@@ -30,8 +30,7 @@ sieve_inner:
 find10001st:
     inc     ebx             ;increase array index
     bt      [primes], ebx   ;is it prime?
-    jnc     find10001st     ;if not, skip it
-    inc     ecx             ;else increase ecx
+    adc     ecx,0           ;if yes, increase ecx
     cmp     ecx, 10001      ;check if counter arrived at 10001
     jl      find10001st     ;if not, continue
     
