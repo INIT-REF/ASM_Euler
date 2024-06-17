@@ -130,4 +130,4 @@ cat_loop:
     jl      cat_loop        ;if not, repeat
     imul    eax, edx        ;eax * multiplier
     add     eax, ebx        ;add ebx --> catenated result in eax
-    ret
+    ret 
