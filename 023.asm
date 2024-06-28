@@ -1,7 +1,9 @@
 section .data
     msg db "%d", 10, 0          ;return string for printf (just the result)
-    isabnum times 28124 dd 0    ;mark numbers as abundant
-    sums    times 28124 dd 0    ;list of sums of two abundant numbers
+
+section .bss
+    isabnum resq 440    ;28160 bits for flags
+    sums    resq 440    ;dito
 
 section .text
     extern printf
@@ -18,7 +20,7 @@ abnums:
     call    divsum                          ;get sum of divisors
     cmp     r8d, ecx                        ;check if sum is <= number
     jle     abnums                          ;if yes, try next number
-    mov     dword [isabnum + 4 * ecx], 1    ;else set number to abnum
+    bts     [isabnum], ecx                  ;else set number to abnum
     jmp     abnums                          ;try next number
 
 sum_init:
@@ -29,18 +31,18 @@ sum_outer:
     inc     eax                             ;next number
     cmp     eax, 28123                      ;finished?
     jge     result                          ;then calculate result
-    cmp     dword [isabnum + 4 * eax], 1    ;test if eax is abundandt
-    jne     sum_outer                       ;if not, try next number
+    bt      [isabnum], eax                  ;test if eax is abundandt
+    jnc     sum_outer                       ;if not, try next number
 
 sum_inner:
     inc     ebx                             ;next number
-    cmp     dword [isabnum + 4 * ebx], 1    ;check if ebx is abundant
-    jne     sum_inner                       ;if not, try next number
+    bt      [isabnum], ebx                  ;check if ebx is abundant
+    jnc     sum_inner                       ;if not, try next number
     mov     ecx, eax                        ;move eax to ecx
     add     ecx, ebx                        ;add ebx
     cmp     ecx, 28123                      ;check if sum < 28124
     jg      sum_outer                       ;if not, go to outer loop
-    mov     dword [sums + 4 * ecx], 1       ;set sums @ sum to 0
+    bts     [sums], ecx                     ;set sums @ sum to 1
     jmp     sum_inner
 
 result:
@@ -51,8 +53,8 @@ sum:
     inc     ebx                         ;next number
     cmp     ebx, 28123                  ;check if we are finished
     jge     print                       ;then print result
-    cmp     dword [sums + 4 * ebx], 1   ;else check if we have a sum
-    je      sum                         ;then skip that number
+    bt      [sums], ebx                 ;else check if we have a sum
+    jc      sum                         ;then skip that number
     add     ecx, ebx                    ;else add it to total
     jmp     sum                         ;repeat
 
